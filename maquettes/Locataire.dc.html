@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#CBD5E1;color:#0F172A;font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#4F46E5}a:hover{color:#4338CA}
+button,input,select,textarea{font-family:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #A5B4FC;outline-offset:2px}
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes popIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<div style="height:56px;flex:none;background:#fff;display:flex;align-items:center;gap:16px;padding:0 24px;box-shadow:0 1px 2px rgba(15,23,42,.08);position:relative;z-index:5">
+  <img src="assets/logo-mark.png" alt="Logo" style="width:32px;height:32px;object-fit:contain;flex:none">
+  <span style="font-size:16px;font-weight:700">MaCité · Espace locataire</span>
+  <div style="display:flex;gap:16px;font-size:13px;font-weight:500;margin-left:16px"><a href="Design System.dc.html">Design system</a><a href="Communs.dc.html">Écrans communs</a><a href="Bailleur.dc.html">Espace bailleur</a></div>
+  <div style="margin-left:auto;display:flex;gap:4px;padding:4px;background:#F1F5F9;border-radius:12px">
+    <button onClick="{{ setLight }}" style="height:36px;padding:0 14px;border:0;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;background:{{ th.lBg }};color:{{ th.lFg }};box-shadow:{{ th.lSh }}"><span class="material-symbols-rounded" style="font-size:18px">light_mode</span>Clair</button>
+    <button onClick="{{ setDark }}" style="height:36px;padding:0 14px;border:0;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;background:{{ th.dBg }};color:{{ th.dFg }};box-shadow:{{ th.dSh }}"><span class="material-symbols-rounded" style="font-size:18px">dark_mode</span>Sombre</button>
+  </div>
+  <div style="display:flex;gap:4px;padding:4px;background:#F1F5F9;border-radius:12px">
+    <button onClick="{{ setMobile }}" style="height:36px;padding:0 14px;border:0;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;background:{{ tg.mBg }};color:{{ tg.mFg }};box-shadow:{{ tg.mSh }}"><span class="material-symbols-rounded" style="font-size:18px">smartphone</span>Mobile</button>
+    <button onClick="{{ setDesktop }}" style="height:36px;padding:0 14px;border:0;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;background:{{ tg.dBg }};color:{{ tg.dFg }};box-shadow:{{ tg.dSh }}"><span class="material-symbols-rounded" style="font-size:18px">desktop_windows</span>Ordinateur</button>
+  </div>
+</div>
+
+<div style="flex:1;display:flex;justify-content:center;align-items:flex-start;padding:24px">
+
+<!-- ===================== MOBILE ===================== -->
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
+<div style="width:{{ mW }};height:{{ mH }}">
+<div style="width:414px;height:868px;transform:{{ mTf }};transform-origin:top left;padding:12px;background:#0F172A;border-radius:56px;box-shadow:0 24px 60px rgba(15,23,42,.35)">
+<div data-screen-label="Locataire mobile" style="width:390px;height:844px;border-radius:44px;overflow:hidden;background:{{ scrBg }};position:relative;display:flex;flex-direction:column">
+  <div style="height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600;color:{{ sbFg }}"><span>9:41</span><span style="display:flex;gap:4px"><span class="material-symbols-rounded" style="font-size:18px">signal_cellular_alt</span><span class="material-symbols-rounded" style="font-size:18px">wifi</span><span class="material-symbols-rounded" style="font-size:18px">battery_full</span></span></div>
+
+  <div style="flex:1;overflow-y:auto;scrollbar-width:none;position:relative;display:flex;flex-direction:column">
+  <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:16px;display:flex;flex-direction:column;gap:16px">
+      <div style="height:28px;width:55%;border-radius:8px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div>
+      <div style="height:200px;border-radius:16px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div>
+      <div style="height:140px;border-radius:16px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div>
+      <div style="height:72px;border-radius:16px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}">
+
+  <!-- M · Accueil -->
+  <sc-if value="{{ s.home }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="TenantHomeScreen · mobile" style="padding:8px 16px 104px;display:flex;flex-direction:column;gap:20px;animation:fadeUp .25s ease-out">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#64748B">Cité Les Jardins</span><span style="font-size:28px;font-weight:700">Bonjour, Sarah</span></div>
+      <button onClick="{{ soonNotif }}" aria-label="Notifications" style="width:48px;height:48px;border:0;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.06);position:relative;display:flex;align-items:center;justify-content:center;color:#334155"><span class="material-symbols-rounded">notifications</span><span style="position:absolute;top:10px;right:11px;width:10px;height:10px;border-radius:50%;background:#F59E0B;border:2px solid #fff"></span></button>
+    </div>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+      <div style="height:136px;position:relative"><image-slot id="room-a102" shape="rect" placeholder="Photo de la chambre"></image-slot></div>
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:12px">
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#64748B">Ma chambre</span><span style="font-size:18px;font-weight:700">Chambre A-102</span><span style="font-size:13px;color:#64748B;font-weight:500">Immeuble A · Les Lauriers · 1er étage</span></div>
+        <span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:500;color:#64748B">Prochain loyer</span><span style="display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 10px 0 6px;border-radius:999px;font-size:12px;font-weight:600;background:{{ rent.bBg }};color:{{ rent.bFg }}"><span class="material-symbols-rounded" style="font-size:14px">{{ rent.bIcon }}</span>{{ rent.bLabel }}</span></div>
+      <span style="font-size:32px;font-weight:700;line-height:1.1">45 000 FCFA</span>
+      <span style="font-size:14px;color:#475569;font-weight:500;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">event</span>{{ rent.due }}</span>
+      <sc-if value="{{ rent.unpaid }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPay }}" style="height:48px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px" style-active="background:#3730A3"><span class="material-symbols-rounded" style="font-size:20px">upload_file</span>Envoyer un justificatif</button></sc-if>
+    </div>
+    <button onClick="{{ startReport }}" style="border:0;text-align:left;background:#FEF3C7;border-radius:16px;padding:16px;display:flex;align-items:center;gap:16px;cursor:pointer" style-active="transform:scale(.98)">
+      <span style="width:56px;height:56px;flex:none;border-radius:16px;background:#F59E0B;color:#0F172A;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:30px">campaign</span></span>
+      <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:18px;font-weight:700;color:#0F172A">Déclarer un problème</span><span style="font-size:13px;font-weight:500;color:#78350F">Fuite, panne, serrure… en 3 étapes</span></span>
+      <span class="material-symbols-rounded" style="color:#78350F">arrow_forward</span>
+    </button>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:20px;font-weight:600">Annonces de la cité</span><button onClick="{{ soonCity }}" style="height:40px;padding:0 12px;border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;border-radius:12px">Voir tout</button></div>
+      <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+        <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;gap:12px;align-items:flex-start">
+          <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ a.bg }};color:{{ a.fg }}"><span class="material-symbols-rounded">{{ a.icon }}</span></span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:600">{{ a.title }}</span><span style="font-size:14px;color:#475569;line-height:1.5">{{ a.body }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ a.when }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- M · Déclarer un problème -->
+  <sc-if value="{{ s.report }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="ReportIssueScreen · mobile" style="flex:1;display:flex;flex-direction:column">
+    <sc-if value="{{ r.inForm }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
+      <div style="height:56px;display:flex;align-items:center;gap:8px;margin:0 -8px">
+        <button onClick="{{ stepBack }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center" style-active="background:#E2E8F0"><span class="material-symbols-rounded">{{ r.backIcon }}</span></button>
+        <span style="flex:1;font-size:16px;font-weight:600">Déclarer un problème</span>
+        <span style="font-size:13px;font-weight:600;color:#64748B;padding-right:8px">Étape {{ r.step }} sur 3</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><span style="height:4px;border-radius:2px;background:{{ r.p1 }}"></span><span style="height:4px;border-radius:2px;background:{{ r.p2 }}"></span><span style="height:4px;border-radius:2px;background:{{ r.p3 }}"></span></div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ r.s1 }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:24px 16px 104px;display:flex;flex-direction:column;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:24px;font-weight:700">Quel est le problème ?</span><button onClick="{{ goMyReports }}" style="height:40px;flex:none;padding:0 12px;border:0;border-radius:12px;background:#EEF2FF;color:#3730A3;font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:18px">list_alt</span>Mes signalements</button></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="7">
+          <button onClick="{{ c.pick }}" style="height:112px;border-radius:16px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:16px;cursor:pointer;text-align:left;background:{{ c.cardBg }};border:{{ c.cardBd }}" style-active="transform:scale(.97)">
+            <span style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:{{ c.bg }};color:{{ c.fg }}"><span class="material-symbols-rounded" style="font-size:28px">{{ c.icon }}</span></span>
+            <span style="font-size:15px;font-weight:600;color:#0F172A">{{ c.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ r.s2 }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:24px 16px 120px;display:flex;flex-direction:column;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;font-size:13px;font-weight:600;background:{{ r.catBg }};color:{{ r.catFg }}"><span class="material-symbols-rounded" style="font-size:18px">{{ r.catIcon }}</span>{{ r.catLabel }}</span><span style="font-size:24px;font-weight:700">Décrivez le problème</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ r.descLabel }}">Que se passe-t-il ?</label>
+        <textarea value="{{ desc }}" onChange="{{ onDesc }}" rows="4" placeholder="Ex. : l'eau coule sous l'évier depuis ce matin" style="border-radius:12px;padding:12px 16px;font-size:16px;line-height:1.5;resize:none;background:#fff;color:#0F172A;border:{{ r.descBd }}"></textarea>
+        <sc-if value="{{ r.hasDescError }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Ajoutez quelques mots pour aider votre bailleur.</span></sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500">Photos (facultatif)</label>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+          <div style="aspect-ratio:1;position:relative;min-width:0;overflow:hidden"><image-slot id="rep-photo-1" radius="12" placeholder="Photo 1"></image-slot></div>
+          <div style="aspect-ratio:1;position:relative;min-width:0;overflow:hidden"><image-slot id="rep-photo-2" radius="12" placeholder="Photo 2"></image-slot></div>
+          <button style="aspect-ratio:1;min-width:0;border:2px dashed #C7D2FE;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:600"><span class="material-symbols-rounded" style="font-size:28px">photo_camera</span>Ajouter</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ r.s3 }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:24px 16px 120px;display:flex;flex-direction:column;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <span style="font-size:24px;font-weight:700">Est-ce urgent ?</span>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ urgencies }}" as="u" hint-placeholder-count="3">
+          <button onClick="{{ u.pick }}" style="min-height:72px;border-radius:16px;display:flex;align-items:center;gap:16px;padding:12px 16px;cursor:pointer;text-align:left;background:{{ u.cardBg }};border:{{ u.cardBd }}">
+            <span style="width:44px;height:44px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ u.bg }};color:{{ u.fg }}"><span class="material-symbols-rounded">{{ u.icon }}</span></span>
+            <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600;color:#0F172A">{{ u.label }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ u.hint }}</span></span>
+            <span class="material-symbols-rounded" style="color:{{ u.radioFg }};font-variation-settings:'FILL' 1">{{ u.radio }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:600;color:#64748B">Récapitulatif</span>
+        <span style="font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:20px;color:{{ r.catFg }}">{{ r.catIcon }}</span>{{ r.catLabel }} · Chambre A-102</span>
+        <span style="font-size:14px;color:#475569;line-height:1.5">{{ desc }}</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ r.s4 }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="ReportSuccessScreen · mobile" style="flex:1;padding:48px 24px 32px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;animation:fadeUp .3s ease-out">
+      <div style="width:112px;height:112px;border-radius:50%;background:#D1FAE5;display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,0,1)"><span class="material-symbols-rounded" style="font-size:64px;color:#047857;font-variation-settings:'FILL' 1">check_circle</span></div>
+      <span style="font-size:28px;font-weight:700">Signalement envoyé</span>
+      <span style="font-size:16px;color:#475569;line-height:1.5">Votre bailleur a été prévenu. Vous serez notifié dès qu'il prend en charge le problème.</span>
+      <span style="font-size:13px;font-weight:600;color:#64748B">Référence SIG-0142 · {{ r.catLabel }} · {{ r.urgLabel }}</span>
+      <div style="width:100%;background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;justify-content:space-between;margin-top:8px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1"><span style="width:32px;height:32px;border-radius:50%;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:18px">check</span></span><span style="font-size:13px;font-weight:600">Envoyé</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1"><span style="width:32px;height:32px;border-radius:50%;border:2px solid #CBD5E1;color:#94A3B8;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">2</span><span style="font-size:13px;font-weight:500;color:#64748B">Pris en charge</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1"><span style="width:32px;height:32px;border-radius:50%;border:2px solid #CBD5E1;color:#94A3B8;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">3</span><span style="font-size:13px;font-weight:500;color:#64748B">Résolu</span></div>
+      </div>
+      <div style="margin-top:auto;width:100%;display:flex;flex-direction:column;gap:12px">
+        <button onClick="{{ goHome }}" style="height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600">Retour à l'accueil</button>
+        <button onClick="{{ soonMyReports }}" style="height:56px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600">Suivre mon signalement</button>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- M · Paiements -->
+  <sc-if value="{{ s.payments }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="TenantPaymentsScreen · mobile" style="padding:8px 16px 104px;display:flex;flex-direction:column;gap:20px;animation:fadeUp .25s ease-out">
+    <span style="font-size:28px;font-weight:700">Mes paiements</span>
+    <div style="background:#4F46E5;color:#fff;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:8px;box-shadow:0 6px 16px rgba(79,70,229,.25)">
+      <span style="font-size:13px;font-weight:500;color:#E0E7FF">Solde restant</span>
+      <span style="font-size:32px;font-weight:700;line-height:1.1">{{ rent.balance }}</span>
+      <span style="font-size:13px;font-weight:500;color:#E0E7FF">{{ rent.due }}</span>
+      <sc-if value="{{ rent.unpaid }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPay }}" style="margin-top:8px;height:48px;border:0;border-radius:12px;background:#fff;color:#3730A3;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px"><span class="material-symbols-rounded" style="font-size:20px">upload_file</span>Envoyer un justificatif</button></sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:600">Historique</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column">
+        <sc-for list="{{ history }}" as="h" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #F1F5F9;min-height:72px">
+            <span style="width:40px;height:40px;flex:none;border-radius:12px;background:#D1FAE5;color:#047857;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">check_circle</span></span>
+            <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:600">{{ h.month }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ h.info }}</span></div>
+            <button onClick="{{ h.receipt }}" aria-label="Télécharger la quittance" style="width:48px;height:48px;border:0;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">download</span></button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- M · Accueil sombre -->
+  <sc-if value="{{ darkHome }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="TenantHomeScreen · mobile · sombre" style="padding:8px 16px 104px;display:flex;flex-direction:column;gap:20px;animation:fadeUp .25s ease-out;color:#F1F5F9">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#94A3B8">Cité Les Jardins</span><span style="font-size:28px;font-weight:700">Bonjour, Sarah</span></div>
+      <button onClick="{{ goNotifs }}" aria-label="Notifications" style="width:48px;height:48px;border:0;border-radius:12px;background:#1E293B;position:relative;display:flex;align-items:center;justify-content:center;color:#E2E8F0"><span class="material-symbols-rounded">notifications</span><span style="position:absolute;top:10px;right:11px;width:10px;height:10px;border-radius:50%;background:#F59E0B;border:2px solid #1E293B"></span></button>
+    </div>
+    <div style="background:#1E293B;border-radius:16px;overflow:hidden">
+      <div style="height:136px;position:relative;min-width:0;overflow:hidden"><image-slot id="room-a102" shape="rect" placeholder="Photo de la chambre"></image-slot></div>
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#94A3B8">Ma chambre</span><span style="font-size:18px;font-weight:700">Chambre A-102</span><span style="font-size:13px;color:#94A3B8;font-weight:500">Immeuble A · Les Lauriers · 1er étage</span></div><span class="material-symbols-rounded" style="color:#64748B">chevron_right</span></div>
+    </div>
+    <div style="background:#1E293B;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:500;color:#94A3B8">Prochain loyer</span><span style="display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 10px 0 6px;border-radius:999px;font-size:12px;font-weight:600;background:#422006;color:#FCD34D"><span class="material-symbols-rounded" style="font-size:14px">{{ rent.bIcon }}</span>{{ rent.bLabel }}</span></div>
+      <span style="font-size:32px;font-weight:700;line-height:1.1">45 000 FCFA</span>
+      <span style="font-size:14px;color:#CBD5E1;font-weight:500;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#94A3B8">event</span>{{ rent.due }}</span>
+      <sc-if value="{{ rent.unpaid }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPay }}" style="height:48px;border:0;border-radius:12px;background:#818CF8;color:#0F172A;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px" style-active="background:#A5B4FC"><span class="material-symbols-rounded" style="font-size:20px">upload_file</span>Envoyer un justificatif</button></sc-if>
+    </div>
+    <button onClick="{{ startReport }}" style="border:0;text-align:left;background:#3A2A0C;border-radius:16px;padding:16px;display:flex;align-items:center;gap:16px;cursor:pointer">
+      <span style="width:56px;height:56px;flex:none;border-radius:16px;background:#F59E0B;color:#0F172A;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:30px">campaign</span></span>
+      <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:18px;font-weight:700;color:#FEF3C7">Déclarer un problème</span><span style="font-size:13px;font-weight:500;color:#FCD34D">Fuite, panne, serrure… en 3 étapes</span></span>
+      <span class="material-symbols-rounded" style="color:#FCD34D">arrow_forward</span>
+    </button>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:20px;font-weight:600">Annonces de la cité</span><button onClick="{{ goCity }}" style="height:40px;padding:0 12px;border:0;background:transparent;color:#A5B4FC;font-size:14px;font-weight:600;border-radius:12px">Voir tout</button></div>
+      <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+        <div style="background:#1E293B;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+          <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#312E81;color:#C7D2FE"><span class="material-symbols-rounded">{{ a.icon }}</span></span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:600">{{ a.title }}</span><span style="font-size:14px;color:#CBD5E1;line-height:1.5">{{ a.body }}</span><span style="font-size:13px;color:#94A3B8;font-weight:500">{{ a.when }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- M · Mes signalements -->
+  <sc-if value="{{ s.myreports }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="MyReportsScreen · mobile" style="padding:8px 16px 104px;display:flex;flex-direction:column;gap:16px;animation:fadeUp .25s ease-out">
+    <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:28px;font-weight:700">Mes signalements</span><span style="font-size:14px;color:#64748B;font-weight:500">{{ reportCount }}</span></div>
+    <sc-for list="{{ myReports }}" as="m" hint-placeholder-count="3">
+      <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:14px;animation:fadeUp .25s ease-out">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:44px;height:44px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ m.bg }};color:{{ m.fg }}"><span class="material-symbols-rounded">{{ m.icon }}</span></span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ m.title }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ m.cat }} · {{ m.date }}</span></div>
+          <span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap;background:{{ m.sBg }};color:{{ m.sFg }}">{{ m.status }}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+          <sc-for list="{{ m.steps }}" as="st" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:6px"><span style="height:4px;border-radius:2px;background:{{ st.bar }}"></span><span style="font-size:12px;color:{{ st.fg }};font-weight:{{ st.w }}">{{ st.label }}</span></div></sc-for>
+        </div>
+        <span style="font-size:14px;color:#475569;line-height:1.5">{{ m.note }}</span>
+        <sc-if value="{{ m.resolved }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:#F8FAFC;border-radius:12px;padding:8px 8px 8px 12px">
+            <span style="font-size:13px;font-weight:600">{{ m.rateLabel }}</span>
+            <div style="display:flex"><sc-for list="{{ m.stars }}" as="sr" hint-placeholder-count="5"><button onClick="{{ sr.pick }}" aria-label="Noter" style="width:36px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:{{ sr.color }}"><span class="material-symbols-rounded" style="font-variation-settings:{{ sr.fill }}">star</span></button></sc-for></div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <!-- M · Ma cité -->
+  <sc-if value="{{ s.city }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="MyCityScreen · mobile" style="padding:8px 16px 104px;display:flex;flex-direction:column;gap:24px;animation:fadeUp .25s ease-out">
+    <span style="font-size:28px;font-weight:700">Ma cité</span>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+      <div style="height:148px;position:relative;min-width:0;overflow:hidden"><image-slot id="city-building-a" shape="rect" placeholder="Photo de l'immeuble"></image-slot></div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:18px;font-weight:700">Immeuble A · Les Lauriers</span>
+        <span style="font-size:14px;color:#475569;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">location_on</span>Rue 12, quartier Centre</span>
+        <span style="font-size:14px;color:#475569;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">apartment</span>3 étages · 18 chambres · Cité Les Jardins</span>
+        <span style="font-size:14px;color:#475569;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">wifi</span>Wi-Fi : Jardins-A · code à l'accueil</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:600">Contacts utiles</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column">
+        <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #F1F5F9">
+            <span style="width:44px;height:44px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.ini }}</span>
+            <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:600">{{ c.name }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ c.role }}</span></div>
+            <button onClick="{{ c.call }}" aria-label="Appeler" style="width:48px;height:48px;border:0;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center" style-active="background:#E0E7FF"><span class="material-symbols-rounded">call</span></button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:600">Règlement intérieur</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;overflow:hidden">
+        <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+          <div style="border-bottom:1px solid #F1F5F9">
+            <button onClick="{{ r.toggle }}" style="width:100%;min-height:56px;border:0;background:transparent;display:flex;align-items:center;gap:12px;padding:0 16px;text-align:left;cursor:pointer"><span style="flex:1;font-size:16px;font-weight:600;color:#0F172A">{{ r.title }}</span><span class="material-symbols-rounded" style="color:#64748B">{{ r.chev }}</span></button>
+            <sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0;padding:0 16px 16px;font-size:15px;color:#475569;line-height:1.5;animation:fadeUp .2s ease-out">{{ r.body }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:600">Annonces</span>
+      <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+        <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;gap:12px;align-items:flex-start">
+          <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ a.bg }};color:{{ a.fg }}"><span class="material-symbols-rounded">{{ a.icon }}</span></span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:600">{{ a.title }}</span><span style="font-size:14px;color:#475569;line-height:1.5">{{ a.body }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ a.when }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- M · Mon profil -->
+  <sc-if value="{{ s.profile }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="TenantProfileScreen · mobile" style="padding:8px 16px 104px;display:flex;flex-direction:column;gap:20px;animation:fadeUp .25s ease-out">
+    <div style="display:flex;align-items:center"><span style="flex:1;font-size:28px;font-weight:700">Mon profil</span><button onClick="{{ goSettings }}" aria-label="Paramètres" style="width:48px;height:48px;border:0;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;align-items:center;justify-content:center;color:#334155"><span class="material-symbols-rounded">settings</span></button></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+      <div style="width:96px;height:96px;position:relative"><image-slot id="tenant-avatar" shape="circle" placeholder="Photo"></image-slot></div>
+      <span style="font-size:22px;font-weight:700">Sarah M.</span>
+      <span style="font-size:14px;color:#64748B;font-weight:500">Chambre A-102 · Immeuble A · Les Lauriers</span>
+      <button onClick="{{ editProfile }}" style="height:40px;padding:0 16px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px">edit</span>Modifier</button>
+    </div>
+    <div onClick="{{ goPayments }}" style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;align-items:center;gap:12px;cursor:pointer">
+      <span style="width:44px;height:44px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ payStatus.bg }};color:{{ payStatus.fg }}"><span class="material-symbols-rounded">{{ payStatus.icon }}</span></span>
+      <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Statut des paiements</span><span style="font-size:16px;font-weight:600">{{ payStatus.label }}</span><span style="font-size:13px;color:#64748B">{{ payStatus.text }}</span></div>
+      <span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span>
+    </div>
+    <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:16px;font-weight:600">Mon bail</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Date d'entrée</span><span style="font-size:15px;font-weight:600">1 sept. 2025</span></div>
+        <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Durée du bail</span><span style="font-size:15px;font-weight:600">24 mois</span></div>
+        <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Fin du bail</span><span style="font-size:15px;font-weight:600">31 août 2027</span></div>
+        <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Loyer</span><span style="font-size:15px;font-weight:600">45 000 FCFA</span></div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column">
+      <span style="font-size:16px;font-weight:600;padding:16px 16px 4px">Informations personnelles</span>
+      <div style="display:flex;gap:12px;padding:10px 16px;align-items:center"><span class="material-symbols-rounded" style="color:#64748B">call</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Téléphone</span><span style="font-size:15px">07 12 34 56 02</span></div></div>
+      <div style="display:flex;gap:12px;padding:10px 16px;align-items:center"><span class="material-symbols-rounded" style="color:#64748B">mail</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">E-mail</span><span style="font-size:15px">sarah.m@mail.com</span></div></div>
+      <div style="display:flex;gap:12px;padding:10px 16px 16px;align-items:center"><span class="material-symbols-rounded" style="color:#64748B">emergency</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Contact d'urgence</span><span style="font-size:15px">Paul M. (frère) · 07 22 11 00 99</span></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:600">Documents</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #F1F5F9"><span style="width:44px;height:44px;border-radius:12px;background:#FEE2E2;color:#B91C1C;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">picture_as_pdf</span></span><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:600">Contrat de bail</span><span style="font-size:13px;color:#64748B">PDF · 240 Ko · signé le 28 août 2025</span></div><button onClick="{{ dlContract }}" aria-label="Télécharger" style="width:48px;height:48px;border:0;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">download</span></button></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px"><span style="width:44px;height:44px;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">badge</span></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">Pièce d'identité</span><span style="display:inline-flex;align-self:flex-start;align-items:center;gap:4px;height:22px;padding:0 8px 0 6px;border-radius:999px;background:#D1FAE5;color:#047857;font-size:12px;font-weight:600"><span class="material-symbols-rounded" style="font-size:14px">verified</span>Vérifiée</span></div><button onClick="{{ viewId }}" aria-label="Voir" style="width:48px;height:48px;border:0;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">visibility</span></button></div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- M · Notifications -->
+  <sc-if value="{{ s.notifs }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="NotificationsScreen · mobile" style="padding:0 16px 104px;display:flex;flex-direction:column;gap:16px;animation:fadeUp .25s ease-out">
+    <div style="height:56px;display:flex;align-items:center;gap:8px;margin:0 -8px"><button onClick="{{ goHome }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">arrow_back</span></button><span style="flex:1;font-size:18px;font-weight:600">Notifications</span><sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ true }}"><button onClick="{{ markAll }}" style="height:40px;padding:0 12px;border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;border-radius:12px">Tout lire</button></sc-if></div>
+    <span style="font-size:13px;font-weight:600;color:#64748B">Aujourd'hui</span>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;overflow:hidden">
+      <sc-for list="{{ notifToday }}" as="n" hint-placeholder-count="2">
+        <div onClick="{{ n.open }}" style="display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid #F1F5F9;cursor:pointer;align-items:flex-start" style-active="background:#F8FAFC">
+          <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }};color:{{ n.fg }}"><span class="material-symbols-rounded">{{ n.icon }}</span></span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ n.title }}</span><span style="font-size:14px;color:#475569;line-height:1.45">{{ n.body }}</span><span style="font-size:12px;color:#64748B;font-weight:500">{{ n.when }}</span></div>
+          <sc-if value="{{ n.unread }}" hint-placeholder-val="{{ false }}"><span aria-label="Non lue" style="width:10px;height:10px;margin-top:6px;border-radius:50%;background:#4F46E5;flex:none"></span></sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <span style="font-size:13px;font-weight:600;color:#64748B">Cette semaine</span>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;overflow:hidden">
+      <sc-for list="{{ notifWeek }}" as="n" hint-placeholder-count="3">
+        <div onClick="{{ n.open }}" style="display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid #F1F5F9;cursor:pointer;align-items:flex-start" style-active="background:#F8FAFC">
+          <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }};color:{{ n.fg }}"><span class="material-symbols-rounded">{{ n.icon }}</span></span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ n.title }}</span><span style="font-size:14px;color:#475569;line-height:1.45">{{ n.body }}</span><span style="font-size:12px;color:#64748B;font-weight:500">{{ n.when }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- M · Paramètres -->
+  <sc-if value="{{ s.settings }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="TenantSettingsScreen · mobile" style="padding:0 16px 104px;display:flex;flex-direction:column;gap:16px;animation:fadeUp .25s ease-out">
+    <div style="height:56px;display:flex;align-items:center;gap:8px;margin:0 -8px"><button onClick="{{ goProfile }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">arrow_back</span></button><span style="flex:1;font-size:18px;font-weight:600">Paramètres</span></div>
+    <span style="font-size:13px;font-weight:600;color:#64748B">Notifications</span>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column">
+      <sc-for list="{{ prefList }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #F1F5F9;min-height:64px">
+          <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:500">{{ p.label }}</span><span style="font-size:13px;color:#64748B">{{ p.hint }}</span></div>
+          <button onClick="{{ p.toggle }}" role="switch" aria-label="{{ p.label }}" style="width:52px;height:32px;flex:none;border-radius:16px;padding:3px;cursor:pointer;display:flex;align-items:center;border:2px solid {{ p.trackBd }};background:{{ p.trackBg }}"><span style="width:22px;height:22px;border-radius:50%;transition:transform .2s;background:{{ p.thumbBg }};transform:{{ p.thumbX }}"></span></button>
+        </div>
+      </sc-for>
+    </div>
+    <span style="font-size:13px;font-weight:600;color:#64748B">Apparence et langue</span>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #F1F5F9;min-height:64px"><span class="material-symbols-rounded" style="color:#64748B">dark_mode</span><span style="flex:1;font-size:16px;font-weight:500">Mode sombre</span><button onClick="{{ toggleDark }}" role="switch" aria-label="Mode sombre" style="width:52px;height:32px;flex:none;border-radius:16px;padding:3px;cursor:pointer;display:flex;align-items:center;border:2px solid {{ darkSw.trackBd }};background:{{ darkSw.trackBg }}"><span style="width:22px;height:22px;border-radius:50%;transition:transform .2s;background:{{ darkSw.thumbBg }};transform:{{ darkSw.thumbX }}"></span></button></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:0 16px;min-height:56px"><span class="material-symbols-rounded" style="color:#64748B">language</span><span style="flex:1;font-size:16px;font-weight:500">Langue</span><span style="font-size:15px;color:#64748B">Français</span><span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span></div>
+    </div>
+    <span style="font-size:13px;font-weight:600;color:#64748B">Compte</span>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;overflow:hidden">
+      <button onClick="{{ changePw }}" style="min-height:56px;border:0;border-bottom:1px solid #F1F5F9;background:transparent;display:flex;align-items:center;gap:12px;padding:0 16px;cursor:pointer;text-align:left"><span class="material-symbols-rounded" style="color:#64748B">lock_reset</span><span style="flex:1;font-size:16px;font-weight:500;color:#0F172A">Changer le mot de passe</span><span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span></button>
+      <button onClick="{{ goCity }}" style="min-height:56px;border:0;border-bottom:1px solid #F1F5F9;background:transparent;display:flex;align-items:center;gap:12px;padding:0 16px;cursor:pointer;text-align:left"><span class="material-symbols-rounded" style="color:#64748B">help</span><span style="flex:1;font-size:16px;font-weight:500;color:#0F172A">Aide et contacts</span><span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span></button>
+      <a href="Communs.dc.html" style="min-height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;text-decoration:none;color:#B91C1C"><span class="material-symbols-rounded">logout</span><span style="flex:1;font-size:16px;font-weight:600">Se déconnecter</span></a>
+    </div>
+    <span style="font-size:13px;color:#64748B;text-align:center">MaCité · version 1.0.0</span>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.soon }}" hint-placeholder-val="{{ false }}">
+  <div style="padding:8px 16px;display:flex;flex-direction:column;gap:24px">
+    <span style="font-size:28px;font-weight:700">{{ soonTitle }}</span>
+    <div style="background:#fff;border-radius:16px;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;box-shadow:0 1px 2px rgba(15,23,42,.06)"><div style="width:80px;height:80px;border-radius:50%;background:#EEF2FF;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:40px;color:#818CF8">design_services</span></div><span style="font-size:16px;font-weight:600">Écran prévu au prochain lot</span><span style="font-size:14px;color:#64748B;line-height:1.5">Ce premier lot couvre l'accueil, la déclaration de problème et les paiements.</span></div>
+  </div>
+  </sc-if>
+
+  </sc-if>
+  </div>
+
+  <sc-if value="{{ r.showBar }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 28px;background:#fff;box-shadow:0 -4px 16px rgba(15,23,42,.06);z-index:3">
+    <button onClick="{{ next }}" style="width:100%;height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px" style-active="background:#3730A3">
+      <sc-if value="{{ sending }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite"></span></sc-if>{{ r.cta }}</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+  <div style="height:80px;flex:none;background:#fff;box-shadow:0 -1px 0 #E2E8F0;display:grid;grid-template-columns:repeat(5,1fr);align-items:start;padding-top:12px;z-index:2">
+    <sc-for list="{{ mNav }}" as="n" hint-placeholder-count="5">
+      <button onClick="{{ n.go }}" style="border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ n.fg }}">
+        <span style="width:64px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }}"><span class="material-symbols-rounded" style="font-variation-settings:{{ n.fill }}">{{ n.icon }}</span></span>
+        <span style="font-size:12px;font-weight:{{ n.w }}">{{ n.label }}</span>
+      </button>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ showNavDark }}" hint-placeholder-val="{{ false }}">
+  <div style="height:80px;flex:none;background:#1E293B;box-shadow:0 -1px 0 #334155;display:grid;grid-template-columns:repeat(5,1fr);align-items:start;padding-top:12px;z-index:2">
+    <sc-for list="{{ mNavDark }}" as="n" hint-placeholder-count="5">
+      <button onClick="{{ n.go }}" style="border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ n.fg }}">
+        <span style="width:64px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }}"><span class="material-symbols-rounded" style="font-variation-settings:{{ n.fill }}">{{ n.icon }}</span></span>
+        <span style="font-size:12px;font-weight:{{ n.w }}">{{ n.label }}</span>
+      </button>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ payOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePay }}" style="position:absolute;inset:0;background:rgba(15,23,42,.45);z-index:10;display:flex;align-items:flex-end">
+    <div onClick="{{ stop }}" data-screen-label="PaymentProofSheet · mobile" style="width:100%;background:#fff;border-radius:24px 24px 0 0;padding:12px 16px 32px;display:flex;flex-direction:column;gap:16px;animation:sheetUp .3s cubic-bezier(.2,0,0,1);max-height:92%;overflow-y:auto">
+      <div style="width:32px;height:4px;border-radius:2px;background:#CBD5E1;align-self:center"></div>
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:20px;font-weight:600">Envoyer un justificatif</span><span style="font-size:14px;color:#64748B">Novembre 2026 · Chambre A-102</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ pf.amtLab }}">Montant payé</label>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ pf.amtBd }};color:#64748B"><span class="material-symbols-rounded">payments</span><input inputMode="numeric" value="{{ proofAmt }}" onChange="{{ onProofAmt }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"><span style="font-size:14px;font-weight:600;color:#64748B">FCFA</span></div>
+        <sc-if value="{{ pf.amtErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ pf.amtMsg }}</span></sc-if>
+        <span style="font-size:13px;color:#64748B">Loyer de novembre : 45 000 FCFA. Vous pouvez déclarer un paiement partiel.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ pf.fileLab }}">Pièce justificative</label>
+        <sc-if value="{{ pf.noFile }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ addProof }}" style="min-height:96px;border-radius:12px;border:{{ pf.fileBd }};background:#F8FAFC;color:#4F46E5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-size:15px;font-weight:600" style-hover="filter:brightness(.97)"><span class="material-symbols-rounded" style="font-size:28px">add_a_photo</span>Prendre une photo ou choisir un fichier<span style="font-size:13px;font-weight:500;color:#64748B">Reçu, capture d'écran ou bordereau · JPG, PNG ou PDF</span></button>
+        </sc-if>
+        <sc-if value="{{ pf.hasFile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:12px;align-items:center;background:#F8FAFC;border-radius:12px;padding:8px;animation:fadeUp .2s ease-out">
+            <div style="width:72px;height:72px;flex:none;position:relative"><image-slot id="tenant-proof-nov" radius="10" placeholder="Reçu"></image-slot></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#0F172A">recu-novembre.jpg</span><span style="font-size:13px;color:#64748B">Glissez votre vraie photo sur l'aperçu</span></div>
+            <button onClick="{{ removeProof }}" aria-label="Retirer" style="width:44px;height:44px;flex:none;border:0;border-radius:12px;background:transparent;color:#64748B;display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="material-symbols-rounded">delete</span></button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ pf.fileErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Ajoutez la photo de votre reçu.</span></sc-if>
+      </div>
+      <span style="font-size:13px;color:#64748B;display:flex;gap:6px;align-items:flex-start;line-height:1.45"><span class="material-symbols-rounded" style="font-size:18px">info</span>Votre bailleur vérifie le justificatif. Votre quittance est disponible dès sa validation.</span>
+      <button onClick="{{ sendProof }}" style="height:56px;flex:none;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px" style-active="background:#3730A3"><sc-if value="{{ sending }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite"></span></sc-if>{{ proofCta }}</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:16px;right:16px;bottom:96px;background:#0F172A;color:#F1F5F9;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(15,23,42,.25);z-index:20;animation:fadeUp .2s ease-out"><span class="material-symbols-rounded" style="color:#34D399">check_circle</span><span style="flex:1;font-size:14px;font-weight:500;line-height:1.4">{{ toast }}</span></div>
+  </sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ===================== DESKTOP ===================== -->
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
+<div style="width:{{ dW }};height:{{ dH }};flex:none">
+<div data-screen-label="Locataire ordinateur" style="width:1440px;height:900px;transform:{{ dTf }};transform-origin:top left;background:#F8FAFC;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(15,23,42,.25);display:flex;position:relative">
+  <aside style="width:256px;flex:none;background:#fff;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;padding:20px 16px;gap:4px">
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 12px 24px"><img src="assets/logo-mark.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;flex:none"><span style="font-size:20px;font-weight:700">MaCité</span></div>
+    <sc-for list="{{ dNav }}" as="n" hint-placeholder-count="7">
+      <button onClick="{{ n.go }}" style="height:48px;border:0;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 12px;font-size:15px;cursor:pointer;text-align:left;background:{{ n.bg }};color:{{ n.fg }};font-weight:{{ n.w }}" style-hover="background:#F1F5F9"><span class="material-symbols-rounded" style="color:{{ n.ic }};font-variation-settings:{{ n.fill }}">{{ n.icon }}</span>{{ n.label }}</button>
+    </sc-for>
+    <div style="margin-top:auto;background:#F8FAFC;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:600">Chambre A-102</span><span style="font-size:13px;color:#64748B">Immeuble A · Les Lauriers</span></div>
+  </aside>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+    <header style="height:64px;flex:none;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:16px;padding:0 32px">
+      <div style="width:400px;height:40px;border-radius:12px;background:#F1F5F9;display:flex;align-items:center;gap:8px;padding:0 12px;color:#64748B;font-size:14px"><span class="material-symbols-rounded" style="font-size:20px">search</span>Rechercher une annonce, un contact…</div>
+      <button onClick="{{ soonNotif }}" aria-label="Notifications" style="margin-left:auto;width:40px;height:40px;border:0;border-radius:12px;background:transparent;position:relative;display:flex;align-items:center;justify-content:center;color:#334155;cursor:pointer" style-hover="background:#F1F5F9"><span class="material-symbols-rounded">notifications</span><span style="position:absolute;top:8px;right:9px;width:10px;height:10px;border-radius:50%;background:#F59E0B;border:2px solid #fff"></span></button>
+      <div style="display:flex;align-items:center;gap:10px;padding:4px 8px 4px 4px;border-radius:999px;cursor:pointer" style-hover="background:#F1F5F9"><span style="width:36px;height:36px;border-radius:50%;background:#E0E7FF;color:#3730A3;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">SM</span><span style="font-size:14px;font-weight:600">Sarah M.</span><span class="material-symbols-rounded" style="font-size:20px;color:#64748B">expand_more</span></div>
+    </header>
+    <main style="flex:1;overflow-y:auto">
+    <div style="max-width:1200px;margin:0 auto;padding:32px">
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div style="height:36px;width:320px;border-radius:8px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px"><div style="height:240px;border-radius:16px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div><div style="height:240px;border-radius:16px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div><div style="height:240px;border-radius:16px;background:linear-gradient(90deg,#F1F5F9 0,#E2E8F0 50%,#F1F5F9 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></div></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+
+    <sc-if value="{{ s.home }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="TenantHomeScreen · ordinateur" style="display:flex;flex-direction:column;gap:32px;animation:fadeUp .25s ease-out">
+      <div style="display:flex;align-items:flex-end;gap:16px">
+        <div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:500;color:#64748B">Cité Les Jardins · mercredi 4 novembre</span><span style="font-size:28px;font-weight:700">Bonjour, Sarah</span></div>
+        <button onClick="{{ startReport }}" style="height:48px;padding:0 24px 0 16px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:#4338CA;box-shadow:0 4px 12px rgba(79,70,229,.3)"><span class="material-symbols-rounded" style="font-size:20px">campaign</span>Déclarer un problème</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+        <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden;display:flex;flex-direction:column">
+          <div style="height:160px;position:relative"><image-slot id="room-a102-d" shape="rect" placeholder="Photo de la chambre"></image-slot></div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#64748B">Ma chambre</span><span style="font-size:20px;font-weight:700">Chambre A-102</span><span style="font-size:13px;color:#64748B;font-weight:500">Immeuble A · Les Lauriers · 1er étage</span></div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:500;color:#64748B">Prochain loyer</span><span style="display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 12px 0 8px;border-radius:999px;font-size:13px;font-weight:600;background:{{ rent.bBg }};color:{{ rent.bFg }}"><span class="material-symbols-rounded" style="font-size:16px">{{ rent.bIcon }}</span>{{ rent.bLabel }}</span></div>
+          <span style="font-size:32px;font-weight:700;line-height:1.1">45 000 FCFA</span>
+          <span style="font-size:14px;color:#475569;font-weight:500;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">event</span>{{ rent.due }}</span>
+          <div style="margin-top:auto;display:flex;gap:12px">
+            <sc-if value="{{ rent.unpaid }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPay }}" style="flex:1;height:48px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-hover="background:#EEF2FF"><span class="material-symbols-rounded" style="font-size:20px">upload_file</span>Envoyer un justificatif</button></sc-if>
+            <button onClick="{{ goPayments }}" style="height:48px;padding:0 16px;border:0;border-radius:12px;background:transparent;color:#4F46E5;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#EEF2FF">Historique</button>
+          </div>
+        </div>
+        <button onClick="{{ startReport }}" style="border:0;text-align:left;background:#FEF3C7;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;cursor:pointer;transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 4px 12px rgba(180,83,9,.15)">
+          <span style="width:64px;height:64px;border-radius:18px;background:#F59E0B;color:#0F172A;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:34px">campaign</span></span>
+          <span style="display:flex;flex-direction:column;gap:6px"><span style="font-size:20px;font-weight:700;color:#0F172A">Un souci dans votre chambre ?</span><span style="font-size:14px;font-weight:500;color:#78350F;line-height:1.5">Fuite, panne, serrure… Déclarez-le en moins de 30 secondes.</span></span>
+          <span style="font-size:15px;font-weight:600;color:#78350F;display:flex;align-items:center;gap:6px">Déclarer un problème<span class="material-symbols-rounded" style="font-size:20px">arrow_forward</span></span>
+        </button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:20px;font-weight:600">Dernières annonces de la cité</span><button onClick="{{ soonCity }}" style="height:40px;padding:0 12px;border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer" style-hover="background:#EEF2FF">Voir tout</button></div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+            <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:12px">
+              <span style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ a.bg }};color:{{ a.fg }}"><span class="material-symbols-rounded">{{ a.icon }}</span></span>
+              <span style="font-size:16px;font-weight:600">{{ a.title }}</span><span style="font-size:15px;color:#475569;line-height:1.5">{{ a.body }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ a.when }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.report }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="ReportIssueScreen · ordinateur" style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+      <sc-if value="{{ r.inForm }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px"><button onClick="{{ stepBack }}" style="border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 0"><span class="material-symbols-rounded" style="font-size:18px">arrow_back</span>{{ r.backLabel }}</button><span style="margin-left:auto;font-size:13px;font-weight:600;color:#64748B">Étape {{ r.step }} sur 3</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><span style="height:6px;border-radius:3px;background:{{ r.p1 }}"></span><span style="height:6px;border-radius:3px;background:{{ r.p2 }}"></span><span style="height:6px;border-radius:3px;background:{{ r.p3 }}"></span></div>
+      </div>
+      </sc-if>
+      <div style="background:#fff;border-radius:24px;padding:32px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:24px">
+        <sc-if value="{{ r.s1 }}" hint-placeholder-val="{{ true }}">
+          <span style="font-size:28px;font-weight:700">Quel est le problème ?</span>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+            <sc-for list="{{ cats }}" as="c" hint-placeholder-count="7">
+              <button onClick="{{ c.pick }}" style="height:136px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;background:{{ c.cardBg }};border:{{ c.cardBd }};transition:box-shadow .2s" style-hover="box-shadow:0 4px 12px rgba(15,23,42,.08)">
+                <span style="width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:{{ c.bg }};color:{{ c.fg }}"><span class="material-symbols-rounded" style="font-size:32px">{{ c.icon }}</span></span>
+                <span style="font-size:15px;font-weight:600;color:#0F172A">{{ c.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ r.s2 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;font-size:13px;font-weight:600;background:{{ r.catBg }};color:{{ r.catFg }}"><span class="material-symbols-rounded" style="font-size:18px">{{ r.catIcon }}</span>{{ r.catLabel }}</span><span style="font-size:28px;font-weight:700">Décrivez le problème</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label style="font-size:13px;font-weight:500;color:{{ r.descLabel }}">Que se passe-t-il ?</label>
+            <textarea value="{{ desc }}" onChange="{{ onDesc }}" rows="4" placeholder="Ex. : l'eau coule sous l'évier depuis ce matin" style="border-radius:12px;padding:12px 16px;font-size:16px;line-height:1.5;resize:vertical;color:#0F172A;border:{{ r.descBd }}"></textarea>
+            <sc-if value="{{ r.hasDescError }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Ajoutez quelques mots pour aider votre bailleur.</span></sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label style="font-size:13px;font-weight:500">Photos (facultatif)</label>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+              <div style="aspect-ratio:1;position:relative;min-width:0;overflow:hidden"><image-slot id="rep-photo-1" radius="12" placeholder="Photo 1"></image-slot></div>
+              <div style="aspect-ratio:1;position:relative;min-width:0;overflow:hidden"><image-slot id="rep-photo-2" radius="12" placeholder="Photo 2"></image-slot></div>
+              <button style="aspect-ratio:1;min-width:0;border:2px dashed #C7D2FE;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#E0E7FF"><span class="material-symbols-rounded" style="font-size:28px">add_photo_alternate</span>Ajouter</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ r.s3 }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:28px;font-weight:700">Est-ce urgent ?</span>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <sc-for list="{{ urgencies }}" as="u" hint-placeholder-count="3">
+              <button onClick="{{ u.pick }}" style="border-radius:16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px;cursor:pointer;text-align:left;background:{{ u.cardBg }};border:{{ u.cardBd }}">
+                <span style="width:100%;display:flex;justify-content:space-between"><span style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ u.bg }};color:{{ u.fg }}"><span class="material-symbols-rounded">{{ u.icon }}</span></span><span class="material-symbols-rounded" style="color:{{ u.radioFg }};font-variation-settings:'FILL' 1">{{ u.radio }}</span></span>
+                <span style="font-size:16px;font-weight:600;color:#0F172A">{{ u.label }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ u.hint }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="background:#F8FAFC;border-radius:16px;padding:16px 20px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:600;color:#64748B">Récapitulatif</span>
+            <span style="font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:20px;color:{{ r.catFg }}">{{ r.catIcon }}</span>{{ r.catLabel }} · Chambre A-102</span>
+            <span style="font-size:15px;color:#475569;line-height:1.5">{{ desc }}</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ r.s4 }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="ReportSuccessScreen · ordinateur" style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:24px 0">
+            <div style="width:112px;height:112px;border-radius:50%;background:#D1FAE5;display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,0,1)"><span class="material-symbols-rounded" style="font-size:64px;color:#047857;font-variation-settings:'FILL' 1">check_circle</span></div>
+            <span style="font-size:28px;font-weight:700">Signalement envoyé</span>
+            <span style="font-size:16px;color:#475569;line-height:1.5;max-width:480px">Votre bailleur a été prévenu. Vous serez notifié dès qu'il prend en charge le problème.</span>
+            <span style="font-size:13px;font-weight:600;color:#64748B">Référence SIG-0142 · {{ r.catLabel }} · {{ r.urgLabel }}</span>
+            <div style="display:flex;gap:12px;margin-top:8px">
+              <button onClick="{{ soonMyReports }}" style="height:48px;padding:0 20px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#EEF2FF">Suivre mon signalement</button>
+              <button onClick="{{ goHome }}" style="height:48px;padding:0 24px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#4338CA">Retour à l'accueil</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ r.showBarD }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:flex-end"><button onClick="{{ next }}" style="height:48px;padding:0 28px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:10px;cursor:pointer" style-hover="background:#4338CA"><sc-if value="{{ sending }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite"></span></sc-if>{{ r.cta }}</button></div>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.payments }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="TenantPaymentsScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:fadeUp .25s ease-out">
+      <span style="font-size:28px;font-weight:700">Mes paiements</span>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+        <div style="background:#4F46E5;color:#fff;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:8px;box-shadow:0 6px 16px rgba(79,70,229,.25)">
+          <span style="font-size:13px;font-weight:500;color:#E0E7FF">Solde restant</span>
+          <span style="font-size:32px;font-weight:700;line-height:1.1">{{ rent.balance }}</span>
+          <span style="font-size:13px;font-weight:500;color:#E0E7FF">{{ rent.due }}</span>
+          <sc-if value="{{ rent.unpaid }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPay }}" style="margin-top:8px;height:48px;border:0;border-radius:12px;background:#fff;color:#3730A3;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-hover="background:#EEF2FF"><span class="material-symbols-rounded" style="font-size:20px">upload_file</span>Envoyer un justificatif</button></sc-if>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:500;color:#64748B">Payé en 2026</span><span style="font-size:32px;font-weight:700;line-height:1.1">{{ paidYear }}</span><span style="font-size:13px;font-weight:500;color:#047857;display:flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Aucun retard cette année</span></div>
+        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:500;color:#64748B">Loyer mensuel</span><span style="font-size:32px;font-weight:700;line-height:1.1">45 000 FCFA</span><span style="font-size:13px;font-weight:500;color:#64748B">Échéance le 5 de chaque mois</span></div>
+      </div>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+        <div style="padding:20px 24px 12px"><span style="font-size:20px;font-weight:600">Historique des loyers</span></div>
+        <div style="display:grid;grid-template-columns:1.4fr 1.2fr 1.2fr 1.4fr 1fr 160px;gap:16px;padding:10px 24px;background:#F8FAFC;font-size:13px;font-weight:600;color:#64748B"><span>Mois</span><span>Montant</span><span>Payé le</span><span>Justificatif</span><span>Statut</span><span style="text-align:right">Quittance</span></div>
+        <sc-for list="{{ history }}" as="h" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:1.4fr 1.2fr 1.2fr 1.4fr 1fr 160px;gap:16px;padding:12px 24px;align-items:center;border-top:1px solid #F1F5F9;font-size:15px" style-hover="background:#F8FAFC">
+            <span style="font-weight:600">{{ h.month }}</span><span>45 000 FCFA</span><span>{{ h.date }}</span><span style="color:#475569">{{ h.method }}</span>
+            <span><span style="display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 12px 0 8px;border-radius:999px;background:#D1FAE5;color:#047857;font-size:13px;font-weight:600"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Payé</span></span>
+            <span style="display:flex;justify-content:flex-end"><button onClick="{{ h.receipt }}" style="height:40px;padding:0 14px 0 10px;border:0;border-radius:12px;background:#EEF2FF;color:#4338CA;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:#E0E7FF"><span class="material-symbols-rounded" style="font-size:18px">download</span>PDF</button></span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.myreports }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="MyReportsScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:fadeUp .25s ease-out">
+      <div style="display:flex;align-items:flex-end;gap:16px"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:28px;font-weight:700">Mes signalements</span><span style="font-size:14px;color:#64748B">{{ reportCount }}</span></div><button onClick="{{ startReport }}" style="height:48px;padding:0 24px 0 16px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:#4338CA"><span class="material-symbols-rounded" style="font-size:20px">add</span>Déclarer un problème</button></div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+        <sc-for list="{{ myReports }}" as="m" hint-placeholder-count="3">
+          <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:14px;animation:fadeUp .25s ease-out">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="width:44px;height:44px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ m.bg }};color:{{ m.fg }}"><span class="material-symbols-rounded">{{ m.icon }}</span></span>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ m.title }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ m.cat }} · {{ m.date }}</span></div>
+            </div>
+            <span style="display:inline-flex;align-self:flex-start;align-items:center;height:28px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:600;background:{{ m.sBg }};color:{{ m.sFg }}">{{ m.status }}</span>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+              <sc-for list="{{ m.steps }}" as="st" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:6px"><span style="height:4px;border-radius:2px;background:{{ st.bar }}"></span><span style="font-size:12px;color:{{ st.fg }};font-weight:{{ st.w }}">{{ st.label }}</span></div></sc-for>
+            </div>
+            <span style="font-size:14px;color:#475569;line-height:1.5">{{ m.note }}</span>
+            <sc-if value="{{ m.resolved }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;background:#F8FAFC;border-radius:12px;padding:6px 6px 6px 12px">
+                <span style="font-size:13px;font-weight:600">{{ m.rateLabel }}</span>
+                <div style="display:flex"><sc-for list="{{ m.stars }}" as="sr" hint-placeholder-count="5"><button onClick="{{ sr.pick }}" aria-label="Noter" style="width:32px;height:36px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:8px;color:{{ sr.color }}" style-hover="background:#FEF3C7"><span class="material-symbols-rounded" style="font-variation-settings:{{ sr.fill }}">star</span></button></sc-for></div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.city }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="MyCityScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:fadeUp .25s ease-out">
+      <span style="font-size:28px;font-weight:700">Ma cité</span>
+      <div style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:24px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+            <div style="min-height:220px;position:relative;min-width:0;overflow:hidden"><image-slot id="city-building-a-d" shape="rect" placeholder="Photo de l'immeuble"></image-slot></div>
+            <div style="padding:24px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:20px;font-weight:700">Immeuble A · Les Lauriers</span>
+              <span style="font-size:14px;color:#475569;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">location_on</span>Rue 12, quartier Centre</span>
+              <span style="font-size:14px;color:#475569;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">apartment</span>3 étages · 18 chambres</span>
+              <span style="font-size:14px;color:#475569;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#64748B">wifi</span>Wi-Fi : Jardins-A · code à l'accueil</span>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+            <span style="display:block;font-size:20px;font-weight:600;padding:20px 24px 8px">Règlement intérieur</span>
+            <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+              <div style="border-top:1px solid #F1F5F9">
+                <button onClick="{{ r.toggle }}" style="width:100%;min-height:56px;border:0;background:transparent;display:flex;align-items:center;gap:12px;padding:0 24px;text-align:left;cursor:pointer" style-hover="background:#F8FAFC"><span style="flex:1;font-size:16px;font-weight:600;color:#0F172A">{{ r.title }}</span><span class="material-symbols-rounded" style="color:#64748B">{{ r.chev }}</span></button>
+                <sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0;padding:0 24px 16px;font-size:15px;color:#475569;line-height:1.5">{{ r.body }}</p></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+            <span style="display:block;font-size:20px;font-weight:600;padding:20px 24px 8px">Contacts utiles</span>
+            <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 24px;border-top:1px solid #F1F5F9">
+                <span style="width:44px;height:44px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.ini }}</span>
+                <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:600">{{ c.name }}</span><span style="font-size:13px;color:#64748B">{{ c.role }} · {{ c.phone }}</span></div>
+                <button onClick="{{ c.call }}" aria-label="Appeler" style="width:40px;height:40px;border:0;border-radius:10px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#E0E7FF"><span class="material-symbols-rounded">call</span></button>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font-size:20px;font-weight:600">Annonces</span>
+            <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+              <div style="background:#fff;border-radius:16px;padding:16px 20px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;gap:12px;align-items:flex-start">
+                <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ a.bg }};color:{{ a.fg }}"><span class="material-symbols-rounded">{{ a.icon }}</span></span>
+                <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:600">{{ a.title }}</span><span style="font-size:14px;color:#475569;line-height:1.5">{{ a.body }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ a.when }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.profile }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="TenantProfileScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:fadeUp .25s ease-out">
+      <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;align-items:center;gap:24px">
+        <div style="width:96px;height:96px;position:relative;flex:none"><image-slot id="tenant-avatar" shape="circle" placeholder="Photo"></image-slot></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px"><span style="font-size:28px;font-weight:700">Sarah M.</span><span style="font-size:14px;color:#64748B;font-weight:500">Chambre A-102 · Immeuble A · Les Lauriers · depuis le 1 sept. 2025</span></div>
+        <button onClick="{{ editProfile }}" style="height:48px;padding:0 20px 0 16px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:#EEF2FF"><span class="material-symbols-rounded" style="font-size:20px">edit</span>Modifier</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start">
+        <div style="background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:16px">
+          <span style="font-size:16px;font-weight:600">Mon bail</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Date d'entrée</span><span style="font-size:15px;font-weight:600">1 sept. 2025</span></div>
+            <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Durée</span><span style="font-size:15px;font-weight:600">24 mois</span></div>
+            <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Fin du bail</span><span style="font-size:15px;font-weight:600">31 août 2027</span></div>
+            <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Loyer</span><span style="font-size:15px;font-weight:600">45 000 FCFA</span></div>
+          </div>
+          <div onClick="{{ goPayments }}" style="display:flex;align-items:center;gap:12px;background:#F8FAFC;border-radius:12px;padding:12px;cursor:pointer" style-hover="background:#F1F5F9"><span style="width:40px;height:40px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;background:{{ payStatus.bg }};color:{{ payStatus.fg }}"><span class="material-symbols-rounded">{{ payStatus.icon }}</span></span><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:600">{{ payStatus.label }}</span><span style="font-size:13px;color:#64748B">{{ payStatus.text }}</span></div><span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span></div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:16px">
+          <span style="font-size:16px;font-weight:600">Informations personnelles</span>
+          <div style="display:flex;gap:12px;align-items:center"><span class="material-symbols-rounded" style="color:#64748B">call</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Téléphone</span><span style="font-size:15px">07 12 34 56 02</span></div></div>
+          <div style="display:flex;gap:12px;align-items:center"><span class="material-symbols-rounded" style="color:#64748B">mail</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">E-mail</span><span style="font-size:15px">sarah.m@mail.com</span></div></div>
+          <div style="display:flex;gap:12px;align-items:center"><span class="material-symbols-rounded" style="color:#64748B">emergency</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#64748B;font-weight:500">Contact d'urgence</span><span style="font-size:15px">Paul M. (frère) · 07 22 11 00 99</span></div></div>
+        </div>
+        <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+          <span style="display:block;font-size:16px;font-weight:600;padding:20px 24px 8px">Documents</span>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 24px;border-top:1px solid #F1F5F9"><span style="width:40px;height:40px;border-radius:10px;background:#FEE2E2;color:#B91C1C;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">picture_as_pdf</span></span><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:600">Contrat de bail</span><span style="font-size:13px;color:#64748B">PDF · 240 Ko</span></div><button onClick="{{ dlContract }}" aria-label="Télécharger" style="width:40px;height:40px;border:0;border-radius:10px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#E0E7FF"><span class="material-symbols-rounded">download</span></button></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 24px 16px;border-top:1px solid #F1F5F9"><span style="width:40px;height:40px;border-radius:10px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">badge</span></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">Pièce d'identité</span><span style="display:inline-flex;align-self:flex-start;align-items:center;gap:4px;height:22px;padding:0 8px 0 6px;border-radius:999px;background:#D1FAE5;color:#047857;font-size:12px;font-weight:600"><span class="material-symbols-rounded" style="font-size:14px">verified</span>Vérifiée</span></div><button onClick="{{ viewId }}" aria-label="Voir" style="width:40px;height:40px;border:0;border-radius:10px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#E0E7FF"><span class="material-symbols-rounded">visibility</span></button></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.notifs }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="NotificationsScreen · ordinateur" style="max-width:760px;display:flex;flex-direction:column;gap:20px;animation:fadeUp .25s ease-out">
+      <div style="display:flex;align-items:flex-end;gap:16px"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:28px;font-weight:700">Notifications</span><span style="font-size:14px;color:#64748B">{{ unreadLabel }}</span></div><sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ true }}"><button onClick="{{ markAll }}" style="height:48px;padding:0 20px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#EEF2FF">Tout marquer comme lu</button></sc-if></div>
+      <span style="font-size:13px;font-weight:600;color:#64748B">Aujourd'hui</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+        <sc-for list="{{ notifToday }}" as="n" hint-placeholder-count="2">
+          <div onClick="{{ n.open }}" tabindex="0" style="display:flex;gap:16px;padding:16px 24px;border-bottom:1px solid #F1F5F9;cursor:pointer;align-items:flex-start" style-hover="background:#F8FAFC">
+            <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }};color:{{ n.fg }}"><span class="material-symbols-rounded">{{ n.icon }}</span></span>
+            <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ n.title }}</span><span style="font-size:15px;color:#475569;line-height:1.45">{{ n.body }}</span></div>
+            <span style="font-size:13px;color:#64748B;font-weight:500">{{ n.when }}</span>
+            <sc-if value="{{ n.unread }}" hint-placeholder-val="{{ false }}"><span aria-label="Non lue" style="width:10px;height:10px;margin-top:6px;border-radius:50%;background:#4F46E5;flex:none"></span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size:13px;font-weight:600;color:#64748B">Cette semaine</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+        <sc-for list="{{ notifWeek }}" as="n" hint-placeholder-count="3">
+          <div onClick="{{ n.open }}" tabindex="0" style="display:flex;gap:16px;padding:16px 24px;border-bottom:1px solid #F1F5F9;cursor:pointer;align-items:flex-start" style-hover="background:#F8FAFC">
+            <span style="width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }};color:{{ n.fg }}"><span class="material-symbols-rounded">{{ n.icon }}</span></span>
+            <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ n.title }}</span><span style="font-size:15px;color:#475569;line-height:1.45">{{ n.body }}</span></div>
+            <span style="font-size:13px;color:#64748B;font-weight:500">{{ n.when }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.settings }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="TenantSettingsScreen · ordinateur" style="max-width:760px;display:flex;flex-direction:column;gap:20px;animation:fadeUp .25s ease-out">
+      <span style="font-size:28px;font-weight:700">Paramètres</span>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+        <span style="display:block;font-size:16px;font-weight:600;padding:20px 24px 8px">Notifications</span>
+        <sc-for list="{{ prefList }}" as="p" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:16px;padding:12px 24px;border-top:1px solid #F1F5F9">
+            <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:500">{{ p.label }}</span><span style="font-size:13px;color:#64748B">{{ p.hint }}</span></div>
+            <button onClick="{{ p.toggle }}" role="switch" aria-label="{{ p.label }}" style="width:52px;height:32px;flex:none;border-radius:16px;padding:3px;cursor:pointer;display:flex;align-items:center;border:2px solid {{ p.trackBd }};background:{{ p.trackBg }}"><span style="width:22px;height:22px;border-radius:50%;transition:transform .2s;background:{{ p.thumbBg }};transform:{{ p.thumbX }}"></span></button>
+          </div>
+        </sc-for>
+      </div>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+        <span style="display:block;font-size:16px;font-weight:600;padding:20px 24px 8px">Apparence et langue</span>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 24px;border-top:1px solid #F1F5F9"><span class="material-symbols-rounded" style="color:#64748B">dark_mode</span><span style="flex:1;font-size:16px;font-weight:500">Mode sombre</span><button onClick="{{ toggleDark }}" role="switch" aria-label="Mode sombre" style="width:52px;height:32px;flex:none;border-radius:16px;padding:3px;cursor:pointer;display:flex;align-items:center;border:2px solid {{ darkSw.trackBd }};background:{{ darkSw.trackBg }}"><span style="width:22px;height:22px;border-radius:50%;transition:transform .2s;background:{{ darkSw.thumbBg }};transform:{{ darkSw.thumbX }}"></span></button></div>
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 24px;border-top:1px solid #F1F5F9"><span class="material-symbols-rounded" style="color:#64748B">language</span><span style="flex:1;font-size:16px;font-weight:500">Langue</span><span style="font-size:15px;color:#64748B">Français</span></div>
+      </div>
+      <div style="background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);overflow:hidden">
+        <span style="display:block;font-size:16px;font-weight:600;padding:20px 24px 8px">Compte</span>
+        <button onClick="{{ changePw }}" style="width:100%;min-height:56px;border:0;border-top:1px solid #F1F5F9;background:transparent;display:flex;align-items:center;gap:16px;padding:0 24px;cursor:pointer;text-align:left" style-hover="background:#F8FAFC"><span class="material-symbols-rounded" style="color:#64748B">lock_reset</span><span style="flex:1;font-size:16px;font-weight:500;color:#0F172A">Changer le mot de passe</span><span class="material-symbols-rounded" style="color:#94A3B8">chevron_right</span></button>
+        <a href="Communs.dc.html" style="min-height:56px;border-top:1px solid #F1F5F9;display:flex;align-items:center;gap:16px;padding:0 24px;text-decoration:none;color:#B91C1C"><span class="material-symbols-rounded">logout</span><span style="flex:1;font-size:16px;font-weight:600">Se déconnecter</span></a>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.soon }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <span style="font-size:28px;font-weight:700">{{ soonTitle }}</span>
+      <div style="background:#fff;border-radius:16px;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;box-shadow:0 1px 2px rgba(15,23,42,.06)"><div style="width:96px;height:96px;border-radius:50%;background:#EEF2FF;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:44px;color:#818CF8">design_services</span></div><span style="font-size:20px;font-weight:600">Écran prévu au prochain lot</span><span style="font-size:16px;color:#64748B">Ce premier lot couvre l'accueil, la déclaration de problème et les paiements.</span></div>
+    </div>
+    </sc-if>
+
+    </sc-if>
+    </div>
+    </main>
+  </div>
+
+  <sc-if value="{{ payOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePay }}" style="position:absolute;inset:0;background:rgba(15,23,42,.45);z-index:10;display:flex;align-items:center;justify-content:center">
+    <div onClick="{{ stop }}" data-screen-label="PaymentProofDialog · ordinateur" style="width:520px;background:#fff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 12px 32px rgba(15,23,42,.2);animation:popIn .2s ease-out">
+      <div style="display:flex;align-items:flex-start;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:20px;font-weight:600">Envoyer un justificatif</span><span style="font-size:14px;color:#64748B">Novembre 2026 · Chambre A-102</span></div><button onClick="{{ closePay }}" aria-label="Fermer" style="width:40px;height:40px;border:0;border-radius:10px;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F5F9"><span class="material-symbols-rounded">close</span></button></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ pf.amtLab }}">Montant payé</label>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ pf.amtBd }};color:#64748B"><span class="material-symbols-rounded">payments</span><input inputMode="numeric" value="{{ proofAmt }}" onChange="{{ onProofAmt }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"><span style="font-size:14px;font-weight:600;color:#64748B">FCFA</span></div>
+        <sc-if value="{{ pf.amtErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ pf.amtMsg }}</span></sc-if>
+        <span style="font-size:13px;color:#64748B">Loyer de novembre : 45 000 FCFA. Vous pouvez déclarer un paiement partiel.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ pf.fileLab }}">Pièce justificative</label>
+        <sc-if value="{{ pf.noFile }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ addProof }}" style="min-height:96px;border-radius:12px;border:{{ pf.fileBd }};background:#F8FAFC;color:#4F46E5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-size:15px;font-weight:600" style-hover="filter:brightness(.97)"><span class="material-symbols-rounded" style="font-size:28px">add_a_photo</span>Prendre une photo ou choisir un fichier<span style="font-size:13px;font-weight:500;color:#64748B">Reçu, capture d'écran ou bordereau · JPG, PNG ou PDF</span></button>
+        </sc-if>
+        <sc-if value="{{ pf.hasFile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:12px;align-items:center;background:#F8FAFC;border-radius:12px;padding:8px;animation:fadeUp .2s ease-out">
+            <div style="width:72px;height:72px;flex:none;position:relative"><image-slot id="tenant-proof-nov" radius="10" placeholder="Reçu"></image-slot></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#0F172A">recu-novembre.jpg</span><span style="font-size:13px;color:#64748B">Glissez votre vraie photo sur l'aperçu</span></div>
+            <button onClick="{{ removeProof }}" aria-label="Retirer" style="width:44px;height:44px;flex:none;border:0;border-radius:12px;background:transparent;color:#64748B;display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="material-symbols-rounded">delete</span></button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ pf.fileErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Ajoutez la photo de votre reçu.</span></sc-if>
+      </div>
+      <span style="font-size:13px;color:#64748B;display:flex;gap:6px;align-items:flex-start;line-height:1.45"><span class="material-symbols-rounded" style="font-size:18px">info</span>Votre bailleur vérifie le justificatif. Votre quittance est disponible dès sa validation.</span>
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button onClick="{{ closePay }}" style="height:48px;padding:0 20px;border:1px solid #E2E8F0;border-radius:12px;background:#fff;color:#334155;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#F8FAFC">Annuler</button>
+        <button onClick="{{ sendProof }}" style="height:48px;padding:0 24px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:10px;cursor:pointer" style-hover="background:#4338CA"><sc-if value="{{ sending }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite"></span></sc-if>{{ proofCta }}</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:50%;bottom:32px;transform:translateX(-50%);min-width:360px;background:#0F172A;color:#F1F5F9;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(15,23,42,.25);z-index:20;animation:fadeUp .2s ease-out"><span class="material-symbols-rounded" style="color:#34D399">check_circle</span><span style="flex:1;font-size:14px;font-weight:500">{{ toast }}</span></div>
+  </sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- ===================== DESKTOP · SOMBRE ===================== -->
+<sc-if value="{{ isDesktopDark }}" hint-placeholder-val="{{ false }}">
+<div style="width:{{ dW }};height:{{ dH }};flex:none">
+<div data-screen-label="TenantHomeScreen · ordinateur · sombre" style="width:1440px;height:900px;transform:{{ dTf }};transform-origin:top left;background:#0F172A;color:#F1F5F9;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(15,23,42,.35);display:flex;position:relative">
+  <aside style="width:256px;flex:none;background:#1E293B;display:flex;flex-direction:column;padding:20px 16px;gap:4px">
+    <div style="display:flex;align-items:center;gap:12px;padding:4px 12px 24px"><span style="width:36px;height:36px;border-radius:10px;background:#fff;color:#0F172A;display:flex;align-items:center;justify-content:center"><img src="assets/logo-mark.png" alt="Logo" style="width:26px;height:26px;object-fit:contain"></span><span style="font-size:20px;font-weight:700">MaCité</span></div>
+    <sc-for list="{{ dNavDark }}" as="n" hint-placeholder-count="7">
+      <button onClick="{{ n.go }}" style="height:48px;border:0;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 12px;font-size:15px;cursor:pointer;text-align:left;background:{{ n.bg }};color:{{ n.fg }};font-weight:{{ n.w }}" style-hover="background:#334155"><span class="material-symbols-rounded" style="color:{{ n.ic }};font-variation-settings:{{ n.fill }}">{{ n.icon }}</span>{{ n.label }}</button>
+    </sc-for>
+    <div style="margin-top:auto;background:#0F172A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:600">Chambre A-102</span><span style="font-size:13px;color:#94A3B8">Immeuble A · Les Lauriers</span></div>
+  </aside>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+    <header style="height:64px;flex:none;background:#1E293B;border-bottom:1px solid #334155;display:flex;align-items:center;gap:16px;padding:0 32px">
+      <div style="width:400px;height:40px;border-radius:12px;background:#0F172A;display:flex;align-items:center;gap:8px;padding:0 12px;color:#94A3B8;font-size:14px"><span class="material-symbols-rounded" style="font-size:20px">search</span>Rechercher une annonce, un contact…</div>
+      <button onClick="{{ goNotifs }}" aria-label="Notifications" style="margin-left:auto;width:40px;height:40px;border:0;border-radius:12px;background:transparent;position:relative;display:flex;align-items:center;justify-content:center;color:#E2E8F0;cursor:pointer" style-hover="background:#334155"><span class="material-symbols-rounded">notifications</span><span style="position:absolute;top:8px;right:9px;width:10px;height:10px;border-radius:50%;background:#F59E0B;border:2px solid #1E293B"></span></button>
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:50%;background:#312E81;color:#C7D2FE;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">SM</span><span style="font-size:14px;font-weight:600">Sarah M.</span></div>
+    </header>
+    <main style="flex:1;overflow-y:auto">
+    <div style="max-width:1200px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:flex-end;gap:16px">
+        <div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:500;color:#94A3B8">Cité Les Jardins · mercredi 4 novembre</span><span style="font-size:28px;font-weight:700">Bonjour, Sarah</span></div>
+        <button onClick="{{ startReport }}" style="height:48px;padding:0 24px 0 16px;border:0;border-radius:12px;background:#818CF8;color:#0F172A;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:#A5B4FC"><span class="material-symbols-rounded" style="font-size:20px">campaign</span>Déclarer un problème</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+        <div style="background:#1E293B;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="height:160px;position:relative;min-width:0;overflow:hidden"><image-slot id="room-a102-d" shape="rect" placeholder="Photo de la chambre"></image-slot></div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#94A3B8">Ma chambre</span><span style="font-size:20px;font-weight:700">Chambre A-102</span><span style="font-size:13px;color:#94A3B8;font-weight:500">Immeuble A · Les Lauriers · 1er étage</span></div>
+        </div>
+        <div style="background:#1E293B;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:500;color:#94A3B8">Prochain loyer</span><span style="display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 12px 0 8px;border-radius:999px;font-size:13px;font-weight:600;background:#422006;color:#FCD34D"><span class="material-symbols-rounded" style="font-size:16px">{{ rent.bIcon }}</span>{{ rent.bLabel }}</span></div>
+          <span style="font-size:32px;font-weight:700;line-height:1.1">45 000 FCFA</span>
+          <span style="font-size:14px;color:#CBD5E1;font-weight:500;display:flex;align-items:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px;color:#94A3B8">event</span>{{ rent.due }}</span>
+          <div style="margin-top:auto;display:flex;gap:12px">
+            <sc-if value="{{ rent.unpaid }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPay }}" style="flex:1;height:48px;border:1px solid #6366F1;border-radius:12px;background:transparent;color:#C7D2FE;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-hover="background:#312E81"><span class="material-symbols-rounded" style="font-size:20px">upload_file</span>Envoyer un justificatif</button></sc-if>
+            <button onClick="{{ goPayments }}" style="height:48px;padding:0 16px;border:0;border-radius:12px;background:transparent;color:#A5B4FC;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#312E81">Historique</button>
+          </div>
+        </div>
+        <button onClick="{{ startReport }}" style="border:0;text-align:left;background:#3A2A0C;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;cursor:pointer" style-hover="background:#4A360F">
+          <span style="width:64px;height:64px;border-radius:18px;background:#F59E0B;color:#0F172A;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:34px">campaign</span></span>
+          <span style="display:flex;flex-direction:column;gap:6px"><span style="font-size:20px;font-weight:700;color:#FEF3C7">Un souci dans votre chambre ?</span><span style="font-size:14px;font-weight:500;color:#FCD34D;line-height:1.5">Fuite, panne, serrure… Déclarez-le en moins de 30 secondes.</span></span>
+          <span style="font-size:15px;font-weight:600;color:#FCD34D;display:flex;align-items:center;gap:6px">Déclarer un problème<span class="material-symbols-rounded" style="font-size:20px">arrow_forward</span></span>
+        </button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:20px;font-weight:600">Dernières annonces de la cité</span><button onClick="{{ goCity }}" style="height:40px;padding:0 12px;border:0;background:transparent;color:#A5B4FC;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer" style-hover="background:#312E81">Voir tout</button></div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+            <div style="background:#1E293B;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+              <span style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#312E81;color:#C7D2FE"><span class="material-symbols-rounded">{{ a.icon }}</span></span>
+              <span style="font-size:16px;font-weight:600">{{ a.title }}</span><span style="font-size:15px;color:#CBD5E1;line-height:1.5">{{ a.body }}</span><span style="font-size:13px;color:#94A3B8;font-weight:500">{{ a.when }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </main>
+  </div>
+  <sc-if value="{{ payOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePay }}" style="position:absolute;inset:0;background:rgba(2,6,23,.6);z-index:10;display:flex;align-items:center;justify-content:center">
+    <div onClick="{{ stop }}" style="width:520px;background:#1E293B;color:#F1F5F9;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 12px 32px rgba(0,0,0,.4);animation:popIn .2s ease-out">
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:20px;font-weight:600">Envoyer un justificatif</span><span style="font-size:14px;color:#94A3B8">Novembre 2026 · Chambre A-102</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ pf.amtLabD }}">Montant payé</label>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#0F172A;border:{{ pf.amtBdD }};color:#94A3B8"><span class="material-symbols-rounded">payments</span><input inputMode="numeric" value="{{ proofAmt }}" onChange="{{ onProofAmt }}" style="flex:1;border:0;outline:0;font-size:16px;color:#F1F5F9;background:transparent;min-width:0"><span style="font-size:14px;font-weight:600;color:#94A3B8">FCFA</span></div>
+        <sc-if value="{{ pf.amtErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#FCA5A5;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ pf.amtMsg }}</span></sc-if>
+        <span style="font-size:13px;color:#94A3B8">Loyer de novembre : 45 000 FCFA. Vous pouvez déclarer un paiement partiel.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ pf.fileLabD }}">Pièce justificative</label>
+        <sc-if value="{{ pf.noFile }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ addProof }}" style="min-height:96px;border-radius:12px;border:{{ pf.fileBdD }};background:#0F172A;color:#A5B4FC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-size:15px;font-weight:600" style-hover="filter:brightness(.97)"><span class="material-symbols-rounded" style="font-size:28px">add_a_photo</span>Prendre une photo ou choisir un fichier<span style="font-size:13px;font-weight:500;color:#94A3B8">Reçu, capture d'écran ou bordereau · JPG, PNG ou PDF</span></button>
+        </sc-if>
+        <sc-if value="{{ pf.hasFile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:12px;align-items:center;background:#0F172A;border-radius:12px;padding:8px;animation:fadeUp .2s ease-out">
+            <div style="width:72px;height:72px;flex:none;position:relative"><image-slot id="tenant-proof-nov" radius="10" placeholder="Reçu"></image-slot></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#F1F5F9">recu-novembre.jpg</span><span style="font-size:13px;color:#94A3B8">Glissez votre vraie photo sur l'aperçu</span></div>
+            <button onClick="{{ removeProof }}" aria-label="Retirer" style="width:44px;height:44px;flex:none;border:0;border-radius:12px;background:transparent;color:#94A3B8;display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="material-symbols-rounded">delete</span></button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ pf.fileErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#FCA5A5;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Ajoutez la photo de votre reçu.</span></sc-if>
+      </div>
+      <span style="font-size:13px;color:#94A3B8;display:flex;gap:6px;align-items:flex-start;line-height:1.45"><span class="material-symbols-rounded" style="font-size:18px">info</span>Votre bailleur vérifie le justificatif. Votre quittance est disponible dès sa validation.</span>
+      <div style="display:flex;gap:12px;justify-content:flex-end"><button onClick="{{ closePay }}" style="height:48px;padding:0 20px;border:1px solid #334155;border-radius:12px;background:transparent;color:#E2E8F0;font-size:16px;font-weight:600;cursor:pointer">Annuler</button><button onClick="{{ sendProof }}" style="height:48px;padding:0 24px;border:0;border-radius:12px;background:#818CF8;color:#0F172A;font-size:16px;font-weight:600;cursor:pointer">{{ proofCta }}</button></div>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:50%;bottom:32px;transform:translateX(-50%);min-width:360px;background:#F1F5F9;color:#0F172A;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;z-index:20"><span class="material-symbols-rounded" style="color:#047857">check_circle</span><span style="flex:1;font-size:14px;font-weight:500">{{ toast }}</span></div>
+  </sc-if>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATS = [
+  ['plumb','Plomberie','water_drop','#DBEAFE','#1D4ED8'],
+  ['elec','Électricité','bolt','#FEF3C7','#B45309'],
+  ['lock','Serrure et porte','lock','#EDE9FE','#6D28D9'],
+  ['clean','Propreté','cleaning_services','#D1FAE5','#047857'],
+  ['sec','Sécurité','shield','#FEE2E2','#B91C1C'],
+  ['neigh','Voisinage','groups','#FCE7F3','#9D174D'],
+  ['other','Autre','more_horiz','#F1F5F9','#475569'],
+];
+const URG = [
+  ['low','Faible','Peut attendre quelques jours','signal_cellular_1_bar','#F1F5F9','#475569'],
+  ['mid','Moyen','À régler dans la semaine','signal_cellular_3_bar','#FEF3C7','#B45309'],
+  ['urgent','Urgent','Danger ou dégât en cours','priority_high','#FEE2E2','#B91C1C'],
+];
+const ANN = [
+  { title:'Coupure d’eau jeudi', body:'De 9 h à 12 h dans l’immeuble A. Pensez à faire vos réserves.', when:'Hier · Immeuble A', icon:'water_drop', bg:'#DBEAFE', fg:'#1D4ED8' },
+  { title:'Réunion des locataires', body:'Samedi 14 novembre à 10 h, dans la cour. Ordre du jour : propreté et sécurité.', when:'2 nov. · Toute la cité', icon:'groups', bg:'#EDE9FE', fg:'#6D28D9' },
+  { title:'Peinture des couloirs', body:'Travaux du 16 au 20 novembre, 2e étage. Merci de laisser les couloirs dégagés.', when:'30 oct. · Immeuble A', icon:'format_paint', bg:'#FEF3C7', fg:'#B45309' },
+];
+const MYREP0 = [
+  { id:'r1', title:'Ampoule de la salle de bain', cat:'Électricité', icon:'bolt', bg:'#FEF3C7', fg:'#B45309', date:'28 oct.', step:2, note:'Un technicien passera jeudi matin.' },
+  { id:'r2', title:'Robinet qui goutte', cat:'Plomberie', icon:'water_drop', bg:'#DBEAFE', fg:'#1D4ED8', date:'12 oct.', step:3, note:'Joint remplacé le 14 oct.', rated:0 },
+  { id:'r3', title:'Poignée de porte cassée', cat:'Serrure et porte', icon:'lock', bg:'#EDE9FE', fg:'#6D28D9', date:'2 sept.', step:3, note:'Poignée changée le 4 sept.', rated:4 },
+];
+const NOTIFS0 = [
+  { id:'n1', g:'today', icon:'payments', bg:'#FEF3C7', fg:'#B45309', title:'Rappel de loyer', body:'Votre loyer de 45 000 FCFA est à payer avant demain, 5 novembre.', when:'08:00', unread:true, go:'payments' },
+  { id:'n2', g:'today', icon:'build', bg:'#DBEAFE', fg:'#1D4ED8', title:'Signalement pris en charge', body:'« Ampoule de la salle de bain » : un technicien passera jeudi matin.', when:'07:42', unread:true, go:'myreports' },
+  { id:'n3', g:'week', icon:'campaign', bg:'#EDE9FE', fg:'#6D28D9', title:'Nouvelle annonce', body:'Coupure d’eau jeudi de 9 h à 12 h dans l’immeuble A.', when:'Hier', unread:false, go:'city' },
+  { id:'n4', g:'week', icon:'groups', bg:'#EDE9FE', fg:'#6D28D9', title:'Réunion des locataires', body:'Samedi 14 novembre à 10 h, dans la cour.', when:'2 nov.', unread:false, go:'city' },
+  { id:'n5', g:'week', icon:'check_circle', bg:'#D1FAE5', fg:'#047857', title:'Signalement résolu', body:'« Robinet qui goutte » est résolu. Donnez votre avis.', when:'14 oct.', unread:false, go:'myreports' },
+];
+const RULES = [['Calme après 22 h','Musique et conversations à volume réduit de 22 h à 6 h.'],['Visites','Les visiteurs sont accueillis jusqu’à 21 h et se présentent au gardien.'],['Parties communes','Couloirs et escaliers restent dégagés. Pas de linge aux fenêtres.'],['Déchets','Sacs fermés, déposés dans les bacs de la cour avant 8 h.']];
+const CONTACTS = [['Daniel A.','Bailleur','DA','#E0E7FF','#3730A3','07 12 00 00 01'],['Joseph K.','Gardien · 7 h – 22 h','JK','#FEF3C7','#92400E','07 12 00 00 02'],['Pompiers','Urgence','18','#FEE2E2','#B91C1C','18'],['Police','Urgence','17','#DBEAFE','#1D4ED8','17']];
+const STEPL = ['Envoyé','Pris en charge','Résolu'];
+const STS = [['Envoyé','#DBEAFE','#1D4ED8'],['Pris en charge','#FEF3C7','#B45309'],['Résolu','#D1FAE5','#047857']];
+const HIST = [['Octobre 2026','3 oct.','Reçu validé'],['Septembre 2026','2 sept.','Reçu validé'],['Août 2026','4 août','Reçu validé'],['Juillet 2026','1 juil.','Reçu validé'],['Juin 2026','3 juin','Reçu validé']];
+
+class Component extends DCLogic {
+  state = { device:'mobile', screen:'home', loading:true, step:1, cat:null, desc:'', descError:false, urg:'mid', sending:false, paid:false, payOpen:false, pending:false, proofAmt:'45 000', proofFile:false, proofTried:false, proofSending:false, sentAmt:0, toast:'', soonTitle:'', vw:1400, vh:900, dark:false, myReports:MYREP0, notifs:NOTIFS0, openRule:0, prefs:{ rent:true, reports:true, ann:true, sms:false } };
+  componentDidMount() {
+    this.onResize = () => this.setState({ vw: window.innerWidth, vh: window.innerHeight });
+    this.onResize(); window.addEventListener('resize', this.onResize);
+    this.t1 = setTimeout(() => this.setState({ loading:false }), 900);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.t1); clearTimeout(this.tt); }
+  go(screen, extra = {}) {
+    clearTimeout(this.t1);
+    this.setState({ screen, loading: screen !== 'report', payOpen:false, ...extra });
+    if (screen !== 'report') this.t1 = setTimeout(() => this.setState({ loading:false }), 450);
+  }
+  soon(t) { this.go('soon', { soonTitle:t }); }
+  showToast(t) { clearTimeout(this.tt); this.setState({ toast:t }); this.tt = setTimeout(() => this.setState({ toast:'' }), 3500); }
+  renderVals() {
+    const S = this.state, isM = S.device === 'mobile', scr = S.screen;
+    const cat = CATS.find(c => c[0] === S.cat) || CATS[0];
+    const urg = URG.find(u => u[0] === S.urg);
+    const inForm = scr === 'report' && S.step < 4;
+    const ms = Math.min(1, Math.max(0.5, (S.vh - 56 - 48) / 868));
+    const ds = Math.min(1, Math.max(0.3, (S.vw - 48) / 1440));
+    const hist = HIST;
+    const pAmt = parseInt(String(S.proofAmt).replace(/\D/g, ''), 10) || 0;
+    const amtErr = S.proofTried && (!pAmt || pAmt > 45000), fileErr = S.proofTried && !S.proofFile;
+    const fmtF = n => n.toLocaleString('fr-FR').replace(/[\u202f\u00a0\s]/g, '\u00a0') + '\u00a0FCFA';
+    const next = () => {
+      if (S.step === 2 && S.desc.trim().length < 5) return this.setState({ descError:true });
+      if (S.step === 3) { this.setState({ sending:true }); setTimeout(() => this.setState(st => ({ sending:false, step:4, myReports: [{ id:'new' + Date.now(), title: st.desc.trim().slice(0, 42) || cat[1], cat:cat[1], icon:cat[2], bg:cat[3], fg:cat[4], date:'Aujourd’hui', step:1, note:'Votre bailleur a été prévenu.' }, ...st.myReports] })), 900); return; }
+      this.setState({ step: S.step + 1 });
+    };
+    const pc = n => S.step >= n ? '#4F46E5' : '#E2E8F0';
+    const navS = a => a ? { bg:'#E0E7FF', fg:'#0F172A', fill:"'FILL' 1", w:600 } : { bg:'transparent', fg:'#64748B', fill:"'FILL' 0", w:500 };
+    const dnavS = a => a ? { bg:'#EEF2FF', fg:'#3730A3', ic:'#4F46E5', fill:"'FILL' 1", w:600 } : { bg:'transparent', fg:'#334155', ic:'#64748B', fill:"'FILL' 0", w:500 };
+    const isSoon = k => scr === 'soon' && S.soonTitle === k;
+    const darkHome = S.dark && scr === 'home';
+    const sw = on => on ? { trackBg:'#4F46E5', trackBd:'#4F46E5', thumbX:'translateX(20px)', thumbBg:'#fff' } : { trackBg:'#E2E8F0', trackBd:'#CBD5E1', thumbX:'translateX(0)', thumbBg:'#64748B' };
+    const setPref = k => () => this.setState({ prefs: { ...S.prefs, [k]: !S.prefs[k] } });
+    const decoN = n => ({ ...n, open: () => this.setState({ notifs: S.notifs.map(x => x.id === n.id ? { ...x, unread:false } : x) }, () => this.go(n.go)) });
+    const unread = S.notifs.filter(n => n.unread).length;
+    return {
+      darkHome, isDesktopDark: !isM && darkHome, showNavDark: isM && darkHome,
+      scrBg: darkHome ? '#0F172A' : '#F8FAFC', sbFg: darkHome ? '#F1F5F9' : '#0F172A',
+      th: S.dark ? { lBg:'transparent', lFg:'#64748B', lSh:'none', dBg:'#fff', dFg:'#0F172A', dSh:'0 1px 2px rgba(15,23,42,.12)' } : { lBg:'#fff', lFg:'#0F172A', lSh:'0 1px 2px rgba(15,23,42,.12)', dBg:'transparent', dFg:'#64748B', dSh:'none' },
+      setLight: () => this.setState({ dark:false }), setDark: () => this.go('home', { dark:true }),
+      myReports: S.myReports.map(m => ({ ...m, status: STS[m.step - 1][0], sBg: STS[m.step - 1][1], sFg: STS[m.step - 1][2], resolved: m.step === 3,
+        steps: STEPL.map((l, i) => { const d = i + 1 <= m.step; return { label:l, bar: d ? '#4F46E5' : '#E2E8F0', fg: d ? '#0F172A' : '#64748B', w: d ? 600 : 500 }; }),
+        rateLabel: m.rated ? 'Merci ! Votre note : ' + m.rated + '/5' : 'Notez la résolution',
+        stars: [1,2,3,4,5].map(i => ({ fill: i <= (m.rated || 0) ? "'FILL' 1" : "'FILL' 0", color: i <= (m.rated || 0) ? '#F59E0B' : '#94A3B8', pick: () => { this.setState({ myReports: S.myReports.map(x => x.id === m.id ? { ...x, rated:i } : x) }); this.showToast('Merci pour votre avis'); } })) })),
+      reportCount: S.myReports.filter(m => m.step < 3).length + ' en cours',
+      goMyReports: () => this.go('myreports'),
+      notifToday: S.notifs.filter(n => n.g === 'today').map(decoN), notifWeek: S.notifs.filter(n => n.g === 'week').map(decoN),
+      unreadLabel: unread ? unread + ' non lue' + (unread > 1 ? 's' : '') : 'Tout est lu', hasUnread: unread > 0,
+      markAll: () => this.setState({ notifs: S.notifs.map(n => ({ ...n, unread:false })) }),
+      rules: RULES.map(([t, b], i) => ({ title:t, body:b, open: S.openRule === i, chev: S.openRule === i ? 'expand_less' : 'expand_more', toggle: () => this.setState({ openRule: S.openRule === i ? -1 : i }) })),
+      contacts: CONTACTS.map(([n, r, ini, bg, fg, ph]) => ({ name:n, role:r, ini, bg, fg, phone:ph, call: () => this.showToast('Appel vers ' + n + ' · ' + ph) })),
+      prefList: [['rent','Rappels de loyer','3 jours avant l’échéance'],['reports','Réponses aux signalements','Quand le statut change'],['ann','Annonces de la cité','Coupures, réunions, travaux'],['sms','Recevoir aussi par SMS','Utile sans connexion internet']].map(([k, l, h]) => ({ label:l, hint:h, ...sw(S.prefs[k]), toggle: setPref(k) })),
+      darkSw: sw(S.dark), toggleDark: () => this.setState({ dark: !S.dark }),
+      payStatus: S.pending ? { label:'En vérification', bg:'#DBEAFE', fg:'#1D4ED8', icon:'fact_check', text:'Justificatif envoyé, en attente du bailleur' } : S.paid ? { label:'À jour', bg:'#D1FAE5', fg:'#047857', icon:'check_circle', text:'Prochaine échéance le 5 décembre' } : { label:'À payer', bg:'#FEF3C7', fg:'#B45309', icon:'schedule', text:'Loyer de novembre à payer avant le 5' },
+      goCity: () => this.go('city'), goProfile: () => this.go('profile'), goSettings: () => this.go('settings'), goNotifs: () => this.go('notifs'),
+      editProfile: () => this.showToast('Modification du profil : bientôt disponible'),
+      dlContract: () => this.showToast('Contrat de bail téléchargé (PDF)'), viewId: () => this.showToast('Pièce d’identité ouverte'),
+      changePw: () => this.showToast('Un code vous a été envoyé par SMS'),
+      mNavDark: [['home','home','Accueil'],['report','campaign','Signaler'],['payments','account_balance_wallet','Paiements'],['city','location_city','Ma cité'],['profile','person','Profil']].map(([k, ic, l]) => ({ icon:ic, label:l, bg: k === 'home' ? '#312E81' : 'transparent', fg: k === 'home' ? '#F1F5F9' : '#94A3B8', fill: k === 'home' ? "'FILL' 1" : "'FILL' 0", w: k === 'home' ? 600 : 500, go: () => k === 'report' ? this.go('report', { step:1, cat:null, desc:'', descError:false }) : this.go(k) })),
+      isMobile:isM, isDesktop:!isM && !darkHome,
+      tg: isM ? { mBg:'#fff', mFg:'#0F172A', mSh:'0 1px 2px rgba(15,23,42,.12)', dBg:'transparent', dFg:'#64748B', dSh:'none' } : { dBg:'#fff', dFg:'#0F172A', dSh:'0 1px 2px rgba(15,23,42,.12)', mBg:'transparent', mFg:'#64748B', mSh:'none' },
+      setMobile: () => this.setState({ device:'mobile' }), setDesktop: () => this.setState({ device:'desktop' }),
+      mW: 414 * ms + 'px', mH: 868 * ms + 'px', mTf: 'scale(' + ms + ')', dW: 1440 * ds + 'px', dH: 900 * ds + 'px', dTf: 'scale(' + ds + ')',
+      loading:S.loading, ready:!S.loading,
+      s: { home: scr === 'home' && !S.dark, report: scr === 'report', payments: scr === 'payments', soon: scr === 'soon', city: scr === 'city', profile: scr === 'profile', myreports: scr === 'myreports', notifs: scr === 'notifs', settings: scr === 'settings' },
+      soonTitle:S.soonTitle,
+      rent: S.pending ? { unpaid:false, bLabel:'En vérification', bBg:'#DBEAFE', bFg:'#1D4ED8', bIcon:'fact_check', due:'Justificatif de ' + fmtF(S.sentAmt) + ' envoyé · en attente du bailleur', balance:'45 000 FCFA' } : S.paid ? { unpaid:false, bLabel:'Payé', bBg:'#D1FAE5', bFg:'#047857', bIcon:'check_circle', due:'Prochaine échéance : 5 décembre', balance:'0 FCFA' } : { unpaid:true, bLabel:'À payer', bBg:'#FEF3C7', bFg:'#B45309', bIcon:'schedule', due:'À payer avant demain, 5 novembre', balance:'45 000 FCFA' },
+      paidYear: ((S.paid ? 11 : 10) * 45000).toLocaleString('fr-FR').replace(/\s/g, '\u00a0') + '\u00a0FCFA',
+      announcements: ANN,
+      history: hist.map(([m, d, me]) => ({ month:m, date:d, method:me, info:'Payé le ' + d + ' · ' + me, receipt: () => this.showToast('Quittance de ' + m.toLowerCase() + ' téléchargée') })),
+      startReport: () => this.go('report', { step:1, cat:null, desc:'', descError:false, urg:'mid' }),
+      goHome: () => this.go('home'), goPayments: () => this.go('payments'),
+      soonNotif: () => this.go('notifs'), soonCity: () => this.go('city'), soonMyReports: () => this.go('myreports'),
+      cats: CATS.map(([k, l, ic, bg, fg]) => ({ label:l, icon:ic, bg, fg, cardBg: S.cat === k ? '#EEF2FF' : '#fff', cardBd: S.cat === k ? '2px solid #4F46E5' : '1px solid #E2E8F0', pick: () => { this.setState({ cat:k }); setTimeout(() => this.setState({ step:2 }), 180); } })),
+      urgencies: URG.map(([k, l, h, ic, bg, fg]) => { const a = S.urg === k; return { label:l, hint:h, icon:ic, bg, fg, cardBg: a ? '#EEF2FF' : '#fff', cardBd: a ? '2px solid #4F46E5' : '1px solid #E2E8F0', radio: a ? 'radio_button_checked' : 'radio_button_unchecked', radioFg: a ? '#4F46E5' : '#94A3B8', pick: () => this.setState({ urg:k }) }; }),
+      desc:S.desc, onDesc: e => this.setState({ desc:e.target.value, descError:false }),
+      sending:S.sending,
+      r: { inForm, step:S.step, s1: S.step === 1, s2: S.step === 2, s3: S.step === 3, s4: S.step === 4, p1:pc(1), p2:pc(2), p3:pc(3),
+        backIcon: S.step === 1 ? 'close' : 'arrow_back', backLabel: S.step === 1 ? 'Annuler' : 'Étape précédente',
+        catLabel:cat[1], catIcon:cat[2], catBg:cat[3], catFg:cat[4], urgLabel: urg[1],
+        hasDescError:S.descError, descBd: S.descError ? '2px solid #EF4444' : '1px solid #E2E8F0', descLabel: S.descError ? '#B91C1C' : '#0F172A',
+        showBar: isM && scr === 'report' && (S.step === 2 || S.step === 3), showBarD: !isM && (S.step === 2 || S.step === 3),
+        cta: S.step === 3 ? (S.sending ? 'Envoi…' : 'Envoyer le signalement') : 'Continuer' },
+      stepBack: () => S.step === 1 ? this.go('home') : this.setState({ step: S.step - 1 }),
+      next,
+      showNav: isM && scr !== 'report' && !darkHome,
+      mNav: [['home','home','Accueil'],['report','campaign','Signaler'],['payments','account_balance_wallet','Paiements'],['city','location_city','Ma cité'],['profile','person','Profil']].map(([k, ic, l]) => ({ icon:ic, label:l, ...navS(k === scr || (k === 'report' && scr === 'myreports') || (k === 'profile' && scr === 'settings') || (k === 'home' && scr === 'notifs')), go: () => k === 'report' ? this.go('report', { step:1, cat:null, desc:'', descError:false }) : this.go(k) })),
+      dNav: [['home','home','Accueil'],['report','campaign','Signaler un problème'],['myreports','list_alt','Mes signalements'],['payments','account_balance_wallet','Paiements'],['city','location_city','Ma cité'],['profile','person','Mon profil'],['settings','settings','Paramètres']].map(([k, ic, l]) => ({ icon:ic, label:l, ...dnavS(k === scr), go: () => k === 'report' ? this.go('report', { step:1, cat:null, desc:'', descError:false }) : this.go(k) })),
+      dNavDark: [['home','home','Accueil'],['report','campaign','Signaler un problème'],['myreports','list_alt','Mes signalements'],['payments','account_balance_wallet','Paiements'],['city','location_city','Ma cité'],['profile','person','Mon profil'],['settings','settings','Paramètres']].map(([k, ic, l]) => ({ icon:ic, label:l, bg: k === 'home' ? '#312E81' : 'transparent', fg: k === 'home' ? '#F1F5F9' : '#CBD5E1', ic: k === 'home' ? '#A5B4FC' : '#94A3B8', fill: k === 'home' ? "'FILL' 1" : "'FILL' 0", w: k === 'home' ? 600 : 500, go: () => k === 'report' ? this.go('report', { step:1, cat:null, desc:'', descError:false }) : this.go(k) })),
+      payOpen:S.payOpen, openPay: () => this.setState({ payOpen:true, proofTried:false }), closePay: () => !S.proofSending && this.setState({ payOpen:false }), stop: e => e.stopPropagation(),
+      proofAmt:S.proofAmt, onProofAmt: e => this.setState({ proofAmt: e.target.value.replace(/[^\d\s]/g, '') }),
+      addProof: () => this.setState({ proofFile:true }), removeProof: () => this.setState({ proofFile:false }),
+      pf: { amtErr, fileErr, noFile: !S.proofFile, hasFile: S.proofFile, amtMsg: !pAmt ? 'Saisissez le montant payé.' : 'Le montant dépasse le loyer dû (45 000 FCFA).',
+        amtBd: amtErr ? '2px solid #EF4444' : '1px solid #E2E8F0', amtLab: amtErr ? '#B91C1C' : '#0F172A', fileBd: fileErr ? '2px dashed #EF4444' : '2px dashed #C7D2FE', fileLab: fileErr ? '#B91C1C' : '#0F172A',
+        amtBdD: amtErr ? '2px solid #F87171' : '1px solid #334155', amtLabD: amtErr ? '#FCA5A5' : '#F1F5F9', fileBdD: fileErr ? '2px dashed #F87171' : '2px dashed #4F46E5', fileLabD: fileErr ? '#FCA5A5' : '#F1F5F9' },
+      sending:S.proofSending, proofCta: S.proofSending ? 'Envoi…' : 'Envoyer au bailleur',
+      sendProof: () => { if (S.proofSending) return; if (!pAmt || pAmt > 45000 || !S.proofFile) return this.setState({ proofTried:true }); this.setState({ proofSending:true }); setTimeout(() => { this.setState({ proofSending:false, payOpen:false, pending:true, sentAmt:pAmt }); this.showToast('Justificatif de ' + fmtF(pAmt) + ' envoyé · votre bailleur va le vérifier'); }, 900); },
+      hasToast: !!S.toast, toast:S.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

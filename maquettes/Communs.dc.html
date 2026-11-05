@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#CBD5E1;color:#0F172A;font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#4F46E5}a:hover{color:#4338CA}
+button,input{font-family:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid #A5B4FC;outline-offset:2px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.85) translateY(8px)}100%{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<div style="min-height:56px;flex:none;background:#fff;display:flex;align-items:center;gap:16px;padding:8px 24px;box-shadow:0 1px 2px rgba(15,23,42,.08);flex-wrap:wrap;position:relative;z-index:5">
+  <img src="assets/logo-mark.png" alt="Logo" style="width:32px;height:32px;object-fit:contain;flex:none">
+  <span style="font-size:16px;font-weight:700">MaCité · Écrans communs</span>
+  <a href="Accueil public.dc.html" style="font-size:13px;font-weight:600">← Page d'accueil</a>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <sc-for list="{{ jumps }}" as="j" hint-placeholder-count="6"><button onClick="{{ j.go }}" style="height:32px;white-space:nowrap;flex:none;padding:0 12px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;background:{{ j.bg }};color:{{ j.fg }};border:{{ j.bd }}">{{ j.label }}</button></sc-for>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:4px;padding:4px;background:#F1F5F9;border-radius:12px">
+    <button onClick="{{ setMobile }}" style="height:36px;padding:0 14px;border:0;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;background:{{ tg.mBg }};color:{{ tg.mFg }};box-shadow:{{ tg.mSh }}"><span class="material-symbols-rounded" style="font-size:18px">smartphone</span>Mobile</button>
+    <button onClick="{{ setDesktop }}" style="height:36px;padding:0 14px;border:0;border-radius:9px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;background:{{ tg.dBg }};color:{{ tg.dFg }};box-shadow:{{ tg.dSh }}"><span class="material-symbols-rounded" style="font-size:18px">desktop_windows</span>Ordinateur</button>
+  </div>
+</div>
+
+<div style="flex:1;display:flex;justify-content:center;align-items:flex-start;padding:24px">
+
+<!-- ===================== MOBILE ===================== -->
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
+<div style="width:{{ mW }};height:{{ mH }}">
+<div style="width:414px;height:868px;transform:{{ mTf }};transform-origin:top left;padding:12px;background:#0F172A;border-radius:56px;box-shadow:0 24px 60px rgba(15,23,42,.35)">
+<div style="width:390px;height:844px;border-radius:44px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:{{ mBg }}">
+  <div style="height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600;color:{{ sbFg }}"><span>9:41</span><span style="display:flex;gap:4px"><span class="material-symbols-rounded" style="font-size:18px">signal_cellular_alt</span><span class="material-symbols-rounded" style="font-size:18px">wifi</span><span class="material-symbols-rounded" style="font-size:18px">battery_full</span></span></div>
+
+  <sc-if value="{{ s.splash }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="SplashScreen · mobile" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff;padding-bottom:44px">
+    <div style="width:96px;height:96px;border-radius:28px;background:#fff;color:#4F46E5;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(15,23,42,.25);animation:pop .6s cubic-bezier(.2,0,0,1)"><img src="assets/logo-mark.png" alt="Logo" style="width:69px;height:69px;object-fit:contain"></div>
+    <span style="font-size:32px;font-weight:700;letter-spacing:-0.01em">MaCité</span>
+    <span style="font-size:16px;color:#E0E7FF">La gestion locative, simplement</span>
+    <span style="position:absolute;bottom:64px;width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;animation:spin .9s linear infinite"></span>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.home }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="WelcomeScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:8px 24px 32px;gap:20px;animation:fadeUp .4s ease-out">
+    <div style="display:flex;align-items:center;gap:10px"><img src="assets/logo-mark.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;flex:none"><span style="font-size:20px;font-weight:700">MaCité</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:32px;font-weight:800;line-height:1.1;letter-spacing:-0.02em">La gestion locative, <span style="color:#4F46E5">simplement.</span></span>
+      <span style="font-size:16px;color:#475569;line-height:1.5">Pour les bailleurs et leurs locataires, au même endroit.</span>
+    </div>
+    <div style="flex:1;min-height:0;position:relative;background:#fff;border-radius:24px;box-shadow:0 12px 32px rgba(15,23,42,.08);padding:24px;display:flex;flex-direction:column;gap:14px;overflow:hidden">
+      <div style="position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:#EEF2FF;pointer-events:none"></div>
+      <sc-if value="{{ hSlides.a }}" hint-placeholder-val="{{ true }}"><div style="position:relative;display:flex;flex-direction:column;gap:14px;animation:slideIn .45s cubic-bezier(.2,0,0,1)">
+        <span style="width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:{{ hf.bg }};color:{{ hf.fg }};animation:popIn .4s .1s ease-out both"><span class="material-symbols-rounded" style="font-size:36px">{{ hf.icon }}</span></span>
+        <span style="font-size:13px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:.04em">{{ hf.kicker }}</span><span style="font-size:22px;font-weight:700">{{ hf.title }}</span><span style="font-size:15px;color:#475569;line-height:1.5">{{ hf.text }}</span>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px"><span style="height:36px;border-radius:8px;background:#E0E7FF;border:2px solid #4F46E5;animation:popIn .3s .2s both"></span><span style="height:36px;border-radius:8px;background:#D1FAE5;border:2px solid #10B981;animation:popIn .3s .26s both"></span><span style="height:36px;border-radius:8px;background:#E0E7FF;border:2px solid #4F46E5;animation:popIn .3s .32s both"></span><span style="height:36px;border-radius:8px;background:#FEE2E2;border:2px solid #EF4444;animation:popIn .3s .38s both"></span><span style="height:36px;border-radius:8px;background:#E0E7FF;border:2px solid #4F46E5;animation:popIn .3s .44s both"></span><span style="height:36px;border-radius:8px;background:#F1F5F9;border:2px solid #94A3B8;animation:popIn .3s .5s both"></span><span style="height:36px;border-radius:8px;background:#E0E7FF;border:2px solid #4F46E5;animation:popIn .3s .56s both"></span><span style="height:36px;border-radius:8px;background:#D1FAE5;border:2px solid #10B981;animation:popIn .3s .62s both"></span></div>
+      </div></sc-if>
+      <sc-if value="{{ hSlides.b }}" hint-placeholder-val="{{ false }}"><div style="position:relative;display:flex;flex-direction:column;gap:14px;animation:slideIn .45s cubic-bezier(.2,0,0,1)">
+        <span style="width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:{{ hf.bg }};color:{{ hf.fg }};animation:popIn .4s .1s ease-out both"><span class="material-symbols-rounded" style="font-size:36px">{{ hf.icon }}</span></span>
+        <span style="font-size:13px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:.04em">{{ hf.kicker }}</span><span style="font-size:22px;font-weight:700">{{ hf.title }}</span><span style="font-size:15px;color:#475569;line-height:1.5">{{ hf.text }}</span>
+        <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border-radius:14px;padding:10px 12px;animation:popIn .4s .3s both"><span style="width:32px;height:32px;border-radius:10px;background:#D1FAE5;color:#047857;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:20px">check_circle</span></span><span style="flex:1;display:flex;flex-direction:column;white-space:nowrap"><span style="font-size:13px;font-weight:700">Loyer reçu</span><span style="font-size:12px;color:#64748B">45 000 FCFA · MTN MoMo</span></span></div>
+      </div></sc-if>
+      <sc-if value="{{ hSlides.c }}" hint-placeholder-val="{{ false }}"><div style="position:relative;display:flex;flex-direction:column;gap:14px;animation:slideIn .45s cubic-bezier(.2,0,0,1)">
+        <span style="width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:{{ hf.bg }};color:{{ hf.fg }};animation:popIn .4s .1s ease-out both"><span class="material-symbols-rounded" style="font-size:36px">{{ hf.icon }}</span></span>
+        <span style="font-size:13px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:.04em">{{ hf.kicker }}</span><span style="font-size:22px;font-weight:700">{{ hf.title }}</span><span style="font-size:15px;color:#475569;line-height:1.5">{{ hf.text }}</span>
+        <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border-radius:14px;padding:10px 12px;animation:popIn .4s .3s both"><span style="width:32px;height:32px;border-radius:10px;background:#DBEAFE;color:#1D4ED8;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:20px">water_drop</span></span><span style="flex:1;display:flex;flex-direction:column;white-space:nowrap"><span style="font-size:13px;font-weight:700">Signalement envoyé</span><span style="font-size:12px;color:#64748B">Plomberie · en 24 secondes</span></span></div>
+      </div></sc-if>
+      <div style="margin-top:auto;display:flex;gap:6px;position:relative"><sc-for list="{{ hDots }}" as="d" hint-placeholder-count="3"><button onClick="{{ d.pick }}" aria-label="Diapositive" style="height:8px;border:0;padding:0;border-radius:4px;cursor:pointer;transition:width .3s,background .3s;width:{{ d.w }};background:{{ d.bg }}"></button></sc-for></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <button onClick="{{ toRole }}" style="height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600" style-active="background:#3730A3">Créer un compte</button>
+      <button onClick="{{ toLogin }}" style="height:56px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600" style-active="background:#EEF2FF">Se connecter</button>
+      <button onClick="{{ toOnb }}" style="height:40px;border:0;background:transparent;color:#475569;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px"><span class="material-symbols-rounded" style="font-size:18px">play_circle</span>Découvrir l'application</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.onb }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="OnboardingScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:0 24px 32px">
+    <div style="height:48px;display:flex;justify-content:flex-end;align-items:center"><button onClick="{{ toLogin }}" style="height:48px;padding:0 12px;border:0;background:transparent;color:#4F46E5;font-size:16px;font-weight:600;border-radius:12px">Passer</button></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:24px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <div style="height:340px;position:relative;min-width:0;overflow:hidden;flex:none"><image-slot id="{{ onb.slot }}" radius="24" placeholder="{{ onb.ph }}"></image-slot></div>
+      <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#EEF2FF;color:#3730A3;font-size:13px;font-weight:600"><span class="material-symbols-rounded" style="font-size:18px">{{ onb.icon }}</span>{{ onb.kicker }}</span>
+      <span style="font-size:28px;font-weight:700;line-height:1.2">{{ onb.title }}</span>
+      <span style="font-size:16px;color:#475569;line-height:1.5">{{ onb.text }}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="display:flex;gap:6px;flex:1"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="3"><span style="height:8px;border-radius:4px;width:{{ d.w }};background:{{ d.bg }};transition:width .2s"></span></sc-for></div>
+      <button onClick="{{ onbNext }}" style="height:56px;padding:0 28px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px">{{ onb.cta }}<span class="material-symbols-rounded" style="font-size:20px">arrow_forward</span></button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.login }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="LoginScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:24px 24px 32px;gap:24px;animation:fadeUp .25s ease-out">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <img src="assets/logo-mark.png" alt="Logo" style="width:56px;height:56px;object-fit:contain;flex:none">
+      <span style="font-size:28px;font-weight:700">Connexion</span>
+      <span style="font-size:16px;color:#475569">Heureux de vous revoir.</span>
+    </div>
+    <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}"><div style="background:#FEF2F2;color:#991B1B;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px"><span class="material-symbols-rounded">wifi_off</span><span style="flex:1;font-size:14px;font-weight:500">Pas de connexion internet. Vérifiez vos données mobiles.</span></div></sc-if>
+    <div style="display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#F1F5F9;border-radius:12px">
+      <button onClick="{{ usePhone }}" style="height:40px;border:0;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;background:{{ idTg.pBg }};color:{{ idTg.pFg }};box-shadow:{{ idTg.pSh }}">Téléphone</button>
+      <button onClick="{{ useEmail }}" style="height:40px;border:0;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;background:{{ idTg.eBg }};color:{{ idTg.eFg }};box-shadow:{{ idTg.eSh }}">E-mail</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ f.idLabel }}">{{ idTg.label }}</label>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ f.idBd }};color:{{ f.idIc }}"><span class="material-symbols-rounded">{{ idTg.icon }}</span><input value="{{ ident }}" onChange="{{ onIdent }}" placeholder="{{ idTg.ph }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"></div>
+        <sc-if value="{{ f.idErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ f.idMsg }}</span></sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ f.pwLabel }}">Mot de passe</label>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 4px 0 15px;background:#fff;border:{{ f.pwBd }};color:{{ f.pwIc }}"><span class="material-symbols-rounded">lock</span><input type="{{ pwType }}" value="{{ pw }}" onChange="{{ onPw }}" placeholder="Votre mot de passe" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"><button onClick="{{ togglePw }}" aria-label="Afficher le mot de passe" style="width:40px;height:40px;border:0;background:transparent;color:#64748B;border-radius:10px;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">{{ pwIcon }}</span></button></div>
+        <sc-if value="{{ f.pwErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Saisissez votre mot de passe.</span></sc-if>
+      </div>
+      <button onClick="{{ toForgot }}" style="align-self:flex-end;height:40px;border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;padding:0">Mot de passe oublié ?</button>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:16px;align-items:center">
+      <button onClick="{{ submitLogin }}" style="width:100%;height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px" style-active="background:#3730A3"><sc-if value="{{ busy }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite"></span></sc-if>{{ loginCta }}</button>
+      <span style="font-size:15px;color:#475569">Pas encore de compte ? <button onClick="{{ toRole }}" style="border:0;background:transparent;color:#4F46E5;font-size:15px;font-weight:600;padding:8px 0">Créer un compte</button></span>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.forgot }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="ForgotPasswordScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:0 24px 32px;gap:24px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+    <div style="height:56px;display:flex;align-items:center;margin-left:-12px"><button onClick="{{ toLogin }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">arrow_back</span></button></div>
+    <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:28px;font-weight:700">Mot de passe oublié</span><span style="font-size:16px;color:#475569;line-height:1.5">Indiquez votre numéro ou votre e-mail. Nous vous enverrons un code pour choisir un nouveau mot de passe.</span></div>
+    <sc-if value="{{ resetSent }}" hint-placeholder-val="{{ false }}"><div style="background:#ECFDF5;color:#065F46;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;animation:fadeUp .2s ease-out"><span class="material-symbols-rounded">mark_email_read</span><span style="flex:1;font-size:14px;font-weight:500;line-height:1.4">Code envoyé. Il est valable 10 minutes.</span></div></sc-if>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <label style="font-size:13px;font-weight:500">Téléphone ou e-mail</label>
+      <div style="height:48px;border:1px solid #E2E8F0;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 16px;color:#64748B;background:#fff"><span class="material-symbols-rounded">person</span><input value="{{ ident }}" onChange="{{ onIdent }}" placeholder="07 12 34 56 78" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"></div>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+      <button onClick="{{ sendReset }}" style="height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600">{{ resetCta }}</button>
+      <button onClick="{{ toLogin }}" style="height:56px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:16px;font-weight:600">Retour à la connexion</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.role }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="RoleChoiceScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:0 24px 32px;gap:24px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+    <div style="height:56px;display:flex;align-items:center;margin-left:-12px"><button onClick="{{ toLogin }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">arrow_back</span></button></div>
+    <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:28px;font-weight:700">Qui êtes-vous ?</span><span style="font-size:16px;color:#475569">Votre espace sera adapté à votre profil.</span></div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ roles }}" as="r" hint-placeholder-count="2">
+        <button onClick="{{ r.pick }}" style="border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;text-align:left;cursor:pointer;background:{{ r.bg }};border:{{ r.bd }}">
+          <span style="width:56px;height:56px;flex:none;border-radius:16px;display:flex;align-items:center;justify-content:center;background:{{ r.icBg }};color:{{ r.icFg }}"><span class="material-symbols-rounded" style="font-size:30px">{{ r.icon }}</span></span>
+          <span style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:18px;font-weight:700;color:#0F172A">{{ r.label }}</span><span style="font-size:14px;color:#475569;line-height:1.4">{{ r.text }}</span></span>
+          <span class="material-symbols-rounded" style="color:{{ r.radioFg }};font-variation-settings:'FILL' 1">{{ r.radio }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <button onClick="{{ roleNext }}" style="margin-top:auto;height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600">Continuer</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.code }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="CitySelectScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:0 24px 32px;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1);overflow-y:auto;scrollbar-width:none">
+    <div style="height:56px;flex:none;display:flex;align-items:center;gap:8px;margin-left:-12px"><button onClick="{{ toRole }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">arrow_back</span></button><span style="margin-left:auto;font-size:13px;font-weight:600;color:#64748B">Étape 1 sur 2</span></div>
+    <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:28px;font-weight:700">Choisissez votre cité</span><span style="font-size:16px;color:#475569;line-height:1.5">Votre bailleur recevra votre demande d'inscription et la validera.</span></div>
+    <div style="height:48px;border:1px solid #E2E8F0;background:#fff;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 16px;color:#64748B;flex:none"><span class="material-symbols-rounded">search</span><input value="{{ cityQ }}" onChange="{{ onCityQ }}" placeholder="Nom de la cité ou quartier" style="flex:1;border:0;outline:0;font-size:16px;background:transparent;color:#0F172A;min-width:0"></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ cities }}" as="c" hint-placeholder-count="3">
+        <button onClick="{{ c.pick }}" style="border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;background:{{ c.bg }};border:{{ c.bd }}" style-hover="box-shadow:0 4px 12px rgba(15,23,42,.08)">
+          <span style="width:48px;height:48px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ c.icBg }};color:{{ c.icFg }}"><span class="material-symbols-rounded">location_city</span></span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:700;color:#0F172A">{{ c.name }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ c.area }} · {{ c.free }}</span><span style="font-size:13px;color:#64748B">Bailleur : {{ c.owner }}</span></span>
+          <span class="material-symbols-rounded" style="color:{{ c.radioFg }};font-variation-settings:'FILL' 1">{{ c.radio }}</span>
+        </button>
+      </sc-for>
+      <sc-if value="{{ noCity }}" hint-placeholder-val="{{ false }}"><div style="padding:24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span class="material-symbols-rounded" style="font-size:40px;color:#94A3B8">search_off</span><span style="font-size:16px;font-weight:600">Aucune cité trouvée</span><span style="font-size:14px;color:#64748B">Vérifiez l'orthographe ou demandez le nom exact à votre bailleur.</span></div></sc-if>
+      <sc-if value="{{ cityErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Sélectionnez votre cité pour continuer.</span></sc-if>
+    </div>
+    <button onClick="{{ cityNext }}" style="margin-top:auto;flex:none;height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600">Continuer</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.info }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="SignUpScreen · mobile" style="flex:1;display:flex;flex-direction:column;padding:0 24px 32px;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1);overflow-y:auto;scrollbar-width:none">
+    <div style="height:56px;flex:none;display:flex;align-items:center;gap:8px;margin-left:-12px"><button onClick="{{ infoBack }}" aria-label="Retour" style="width:48px;height:48px;border:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded">arrow_back</span></button><span style="margin-left:auto;font-size:13px;font-weight:600;color:#64748B">{{ infoStep }}</span></div>
+    <span style="font-size:28px;font-weight:700">{{ infoTitle }}</span>
+    <sc-if value="{{ isTenantSignup }}" hint-placeholder-val="{{ true }}"><div style="background:#EEF2FF;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex:none"><span class="material-symbols-rounded" style="color:#4F46E5">location_city</span><span style="flex:1;font-size:14px;color:#3730A3;font-weight:600">{{ cityLabel }}</span><button onClick="{{ toCity }}" style="border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;height:40px">Changer</button></div></sc-if>
+    <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
+      <div style="display:flex;flex-direction:column;gap:8px;flex:none">
+        <label style="font-size:13px;font-weight:500;color:{{ f.lab }}">{{ f.label }}</label>
+        <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}"><div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ f.bd }};color:{{ f.ic }}"><span class="material-symbols-rounded">{{ f.icon }}</span><input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" inputMode="{{ f.mode }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"></div></sc-if>
+        <sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}"><div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ f.bd }};color:{{ f.ic }}"><span class="material-symbols-rounded">{{ f.icon }}</span><select value="{{ f.value }}" onChange="{{ f.onChange }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0;appearance:none;cursor:pointer"><option value="">Sélectionnez votre chambre</option><sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select><span class="material-symbols-rounded">expand_more</span></div></sc-if>
+        <sc-if value="{{ f.isFile }}" hint-placeholder-val="{{ false }}"><div style="height:120px;position:relative;min-width:0;overflow:hidden"><image-slot id="signup-cni-photo" radius="12" placeholder="Photo de la CNI (recto) — glissez l'image ici"></image-slot></div></sc-if>
+        <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ f.msg }}</span></sc-if>
+        <sc-if value="{{ f.hasHint }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#64748B">{{ f.hint }}</span></sc-if>
+      </div>
+    </sc-for>
+    <button onClick="{{ toggleAccept }}" style="border:0;background:transparent;display:flex;align-items:flex-start;gap:12px;text-align:left;padding:4px 0;cursor:pointer"><span class="material-symbols-rounded" style="color:{{ acc.fg }};font-variation-settings:'FILL' 1">{{ acc.icon }}</span><span style="font-size:14px;color:#475569;line-height:1.5">J'accepte les conditions d'utilisation et le règlement intérieur de la cité.</span></button>
+    <sc-if value="{{ acc.err }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500;margin-top:-12px"><span class="material-symbols-rounded" style="font-size:16px">error</span>Cochez la case pour continuer.</span></sc-if>
+    <button onClick="{{ submitInfo }}" style="margin-top:auto;flex:none;height:56px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600">{{ infoCta }}</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="SignUpSuccessScreen · mobile" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:96px 24px 32px;gap:16px;text-align:center;animation:fadeUp .3s ease-out">
+    <div style="width:112px;height:112px;border-radius:50%;background:{{ doneBg }};display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,0,1)"><span class="material-symbols-rounded" style="font-size:64px;color:{{ doneFg }};font-variation-settings:'FILL' 1">{{ doneIcon }}</span></div>
+    <span style="font-size:28px;font-weight:700">{{ doneTitle }}</span>
+    <span style="font-size:16px;color:#475569;line-height:1.5">{{ doneText }}</span>
+    <sc-if value="{{ isTenantSignup }}" hint-placeholder-val="{{ false }}"><div style="width:100%;background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:12px;text-align:left"><sc-for list="{{ pendSteps }}" as="p" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};color:{{ p.fg }}"><span class="material-symbols-rounded" style="font-size:18px">{{ p.icon }}</span></span><span style="font-size:15px;font-weight:{{ p.w }};color:#0F172A">{{ p.label }}</span></div></sc-for></div></sc-if>
+    <a href="{{ doneHref }}" style="margin-top:auto;width:100%;height:56px;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;text-decoration:none">{{ doneCta }}</a>
+  </div>
+  </sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ===================== DESKTOP ===================== -->
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
+<div style="width:{{ dW }};height:{{ dH }};flex:none">
+<div style="width:1440px;height:900px;transform:{{ dTf }};transform-origin:top left;background:#F8FAFC;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(15,23,42,.25);display:flex;position:relative">
+
+  <sc-if value="{{ s.splash }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="SplashScreen · ordinateur" style="flex:1;background:#4F46E5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;color:#fff;position:relative">
+    <div style="width:120px;height:120px;border-radius:32px;background:#fff;color:#4F46E5;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(15,23,42,.25);animation:pop .6s cubic-bezier(.2,0,0,1)"><img src="assets/logo-mark.png" alt="Logo" style="width:86px;height:86px;object-fit:contain"></div>
+    <span style="font-size:40px;font-weight:700">MaCité</span>
+    <span style="font-size:18px;color:#E0E7FF">La gestion locative, simplement</span>
+    <span style="position:absolute;bottom:96px;width:32px;height:32px;border-radius:50%;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;animation:spin .9s linear infinite"></span>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.home }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="WelcomeScreen · ordinateur" style="flex:1;display:flex;flex-direction:column;overflow-y:auto;animation:fadeUp .4s ease-out">
+    <div style="height:72px;flex:none;display:flex;align-items:center;gap:16px;padding:0 48px;border-bottom:1px solid #E2E8F0;background:#fff">
+      <img src="assets/logo-mark.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;flex:none"><span style="font-size:20px;font-weight:700">MaCité</span>
+      <div style="margin-left:auto;display:flex;gap:12px"><button onClick="{{ toLogin }}" style="height:44px;padding:0 18px;border:1px solid #C7D2FE;border-radius:12px;background:#fff;color:#4F46E5;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:#EEF2FF">Se connecter</button><button onClick="{{ toRole }}" style="height:44px;padding:0 18px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:#4338CA">Créer un compte</button></div>
+    </div>
+    <div style="max-width:1200px;width:100%;margin:0 auto;padding:64px 48px 32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:32px;padding:0 14px 0 10px;border-radius:999px;background:#FEF3C7;color:#92400E;font-size:13px;font-weight:600;white-space:nowrap"><span class="material-symbols-rounded" style="font-size:18px">bolt</span>Loyers en FCFA · Mobile Money</span>
+        <span style="font-size:56px;font-weight:800;line-height:1.05;letter-spacing:-0.03em">La gestion locative, <span style="color:#4F46E5">simplement.</span></span>
+        <span style="font-size:19px;line-height:1.55;color:#475569;max-width:520px">Bailleurs : gérez vos immeubles, vos chambres et vos loyers. Locataires : payez et signalez un problème depuis votre téléphone.</span>
+        <div style="display:flex;gap:12px"><button onClick="{{ toRole }}" style="height:56px;padding:0 24px 0 20px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;box-shadow:0 8px 20px rgba(79,70,229,.3)" style-hover="background:#4338CA"><span class="material-symbols-rounded">rocket_launch</span>Commencer</button><button onClick="{{ toOnb }}" style="height:56px;padding:0 20px;border:1px solid #E2E8F0;border-radius:12px;background:#fff;color:#3730A3;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap" style-hover="background:#EEF2FF"><span class="material-symbols-rounded">play_circle</span>Découvrir l'application</button></div>
+      </div>
+      <div style="position:relative;background:#fff;border-radius:28px;box-shadow:0 24px 56px rgba(15,23,42,.12);padding:40px;min-height:340px;display:flex;flex-direction:column;gap:16px;overflow:hidden">
+        <div style="position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:#EEF2FF;pointer-events:none"></div>
+        <sc-if value="{{ hSlides.a }}" hint-placeholder-val="{{ true }}"><div style="position:relative;display:flex;flex-direction:column;gap:14px;animation:slideIn .45s cubic-bezier(.2,0,0,1)"><span style="width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:{{ hf.bg }};color:{{ hf.fg }};animation:popIn .4s .1s ease-out both"><span class="material-symbols-rounded" style="font-size:40px">{{ hf.icon }}</span></span><span style="font-size:13px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:.04em">{{ hf.kicker }}</span><span style="font-size:28px;font-weight:700">{{ hf.title }}</span><span style="font-size:17px;color:#475569;line-height:1.5">{{ hf.text }}</span></div></sc-if>
+        <sc-if value="{{ hSlides.b }}" hint-placeholder-val="{{ false }}"><div style="position:relative;display:flex;flex-direction:column;gap:14px;animation:slideIn .45s cubic-bezier(.2,0,0,1)"><span style="width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:{{ hf.bg }};color:{{ hf.fg }};animation:popIn .4s .1s ease-out both"><span class="material-symbols-rounded" style="font-size:40px">{{ hf.icon }}</span></span><span style="font-size:13px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:.04em">{{ hf.kicker }}</span><span style="font-size:28px;font-weight:700">{{ hf.title }}</span><span style="font-size:17px;color:#475569;line-height:1.5">{{ hf.text }}</span></div></sc-if>
+        <sc-if value="{{ hSlides.c }}" hint-placeholder-val="{{ false }}"><div style="position:relative;display:flex;flex-direction:column;gap:14px;animation:slideIn .45s cubic-bezier(.2,0,0,1)"><span style="width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:{{ hf.bg }};color:{{ hf.fg }};animation:popIn .4s .1s ease-out both"><span class="material-symbols-rounded" style="font-size:40px">{{ hf.icon }}</span></span><span style="font-size:13px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:.04em">{{ hf.kicker }}</span><span style="font-size:28px;font-weight:700">{{ hf.title }}</span><span style="font-size:17px;color:#475569;line-height:1.5">{{ hf.text }}</span></div></sc-if>
+        <div style="margin-top:auto;display:flex;gap:6px;position:relative"><sc-for list="{{ hDots }}" as="d" hint-placeholder-count="3"><button onClick="{{ d.pick }}" aria-label="Diapositive" style="height:8px;border:0;padding:0;border-radius:4px;cursor:pointer;transition:width .3s,background .3s;width:{{ d.w }};background:{{ d.bg }}"></button></sc-for></div>
+        <div style="position:absolute;right:28px;bottom:28px;animation:floatY 4s ease-in-out infinite"><div style="background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 12px 28px rgba(15,23,42,.14);display:flex;align-items:center;gap:10px;white-space:nowrap"><span style="width:32px;height:32px;border-radius:10px;background:#D1FAE5;color:#047857;display:flex;align-items:center;justify-content:center"><span class="material-symbols-rounded" style="font-size:20px">payments</span></span><span style="display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700">Loyer reçu</span><span style="font-size:11px;color:#64748B">45 000 FCFA · MTN MoMo</span></span></div></div>
+      </div>
+    </div>
+    <div style="max-width:1200px;width:100%;margin:0 auto;padding:16px 48px 48px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+      <sc-for list="{{ hfAll }}" as="f" hint-placeholder-count="3">
+        <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;gap:16px;align-items:flex-start;animation:fadeUp .5s ease-out both;animation-delay:{{ f.delay }}"><span style="width:48px;height:48px;flex:none;border-radius:14px;display:flex;align-items:center;justify-content:center;background:{{ f.bg }};color:{{ f.fg }}"><span class="material-symbols-rounded" style="font-size:26px">{{ f.icon }}</span></span><div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:700">{{ f.title }}</span><span style="font-size:15px;color:#475569;line-height:1.5">{{ f.text }}</span></div></div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.onb }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="OnboardingScreen · ordinateur" style="flex:1;display:flex;align-items:center;justify-content:center;padding:48px">
+    <div style="width:1080px;background:#fff;border-radius:24px;box-shadow:0 12px 32px rgba(15,23,42,.08);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden">
+      <div style="height:600px;position:relative;background:#EEF2FF"><image-slot id="{{ onb.slotD }}" shape="rect" placeholder="{{ onb.ph }}"></image-slot></div>
+      <div style="padding:48px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;align-items:center;gap:12px"><img src="assets/logo-mark.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;flex:none"><span style="font-size:20px;font-weight:700">MaCité</span><button onClick="{{ toLogin }}" style="margin-left:auto;height:40px;padding:0 12px;border:0;background:transparent;color:#4F46E5;font-size:15px;font-weight:600;border-radius:12px;cursor:pointer" style-hover="background:#EEF2FF">Passer</button></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+          <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#EEF2FF;color:#3730A3;font-size:13px;font-weight:600"><span class="material-symbols-rounded" style="font-size:18px">{{ onb.icon }}</span>{{ onb.kicker }}</span>
+          <span style="font-size:40px;font-weight:700;line-height:1.15">{{ onb.title }}</span>
+          <span style="font-size:18px;color:#475569;line-height:1.5">{{ onb.text }}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="display:flex;gap:6px;flex:1"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="3"><span style="height:8px;border-radius:4px;width:{{ d.w }};background:{{ d.bg }};transition:width .2s"></span></sc-for></div>
+          <button onClick="{{ onbNext }}" style="height:48px;padding:0 24px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:#4338CA">{{ onb.cta }}<span class="material-symbols-rounded" style="font-size:20px">arrow_forward</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ s.authD }}" hint-placeholder-val="{{ false }}">
+  <div style="width:640px;flex:none;background:#4F46E5;color:#fff;padding:48px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:12px;background:#fff;color:#4F46E5;display:flex;align-items:center;justify-content:center"><img src="assets/logo-mark.png" alt="Logo" style="width:29px;height:29px;object-fit:contain"></span><span style="font-size:22px;font-weight:700">MaCité</span></div>
+    <div style="flex:1;min-height:0;position:relative;border-radius:24px;overflow:hidden;background:#4338CA"><image-slot id="auth-visual" shape="rect" placeholder="Photo d'une cité ou d'un immeuble"></image-slot></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:28px;font-weight:700;line-height:1.25">Chambres, loyers et signalements au même endroit.</span><span style="font-size:16px;color:#E0E7FF">Pour les bailleurs et leurs locataires.</span></div>
+  </div>
+  <div style="flex:1;display:flex;justify-content:center;padding:48px;overflow-y:auto">
+    <div style="width:420px;margin:auto 0;display:flex;flex-direction:column;gap:24px">
+
+    <sc-if value="{{ s.login }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="LoginScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:fadeUp .25s ease-out">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:28px;font-weight:700">Connexion</span><span style="font-size:16px;color:#475569">Heureux de vous revoir.</span></div>
+      <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}"><div style="background:#FEF2F2;color:#991B1B;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px"><span class="material-symbols-rounded">wifi_off</span><span style="flex:1;font-size:14px;font-weight:500">Pas de connexion internet. Vérifiez votre réseau puis réessayez.</span></div></sc-if>
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#F1F5F9;border-radius:12px">
+        <button onClick="{{ usePhone }}" style="height:40px;border:0;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;background:{{ idTg.pBg }};color:{{ idTg.pFg }};box-shadow:{{ idTg.pSh }}">Téléphone</button>
+        <button onClick="{{ useEmail }}" style="height:40px;border:0;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;background:{{ idTg.eBg }};color:{{ idTg.eFg }};box-shadow:{{ idTg.eSh }}">E-mail</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:13px;font-weight:500;color:{{ f.idLabel }}">{{ idTg.label }}</label>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ f.idBd }};color:{{ f.idIc }}"><span class="material-symbols-rounded">{{ idTg.icon }}</span><input value="{{ ident }}" onChange="{{ onIdent }}" placeholder="{{ idTg.ph }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent"></div>
+        <sc-if value="{{ f.idErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ f.idMsg }}</span></sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><label style="font-size:13px;font-weight:500;color:{{ f.pwLabel }}">Mot de passe</label><button onClick="{{ toForgot }}" style="border:0;background:transparent;color:#4F46E5;font-size:13px;font-weight:600;cursor:pointer;padding:0">Mot de passe oublié ?</button></div>
+        <div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 4px 0 15px;background:#fff;border:{{ f.pwBd }};color:{{ f.pwIc }}"><span class="material-symbols-rounded">lock</span><input type="{{ pwType }}" value="{{ pw }}" onChange="{{ onPw }}" placeholder="Votre mot de passe" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent"><button onClick="{{ togglePw }}" aria-label="Afficher le mot de passe" style="width:40px;height:40px;border:0;background:transparent;color:#64748B;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F1F5F9"><span class="material-symbols-rounded">{{ pwIcon }}</span></button></div>
+        <sc-if value="{{ f.pwErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Saisissez votre mot de passe.</span></sc-if>
+      </div>
+      <button onClick="{{ submitLogin }}" style="height:48px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer" style-hover="background:#4338CA"><sc-if value="{{ busy }}" hint-placeholder-val="{{ false }}"><span style="width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite"></span></sc-if>{{ loginCta }}</button>
+      <span style="font-size:15px;color:#475569;text-align:center">Pas encore de compte ? <button onClick="{{ toRole }}" style="border:0;background:transparent;color:#4F46E5;font-size:15px;font-weight:600;cursor:pointer;padding:0">Créer un compte</button></span>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.forgot }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="ForgotPasswordScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <button onClick="{{ toLogin }}" style="align-self:flex-start;border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0"><span class="material-symbols-rounded" style="font-size:18px">arrow_back</span>Connexion</button>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:28px;font-weight:700">Mot de passe oublié</span><span style="font-size:16px;color:#475569;line-height:1.5">Indiquez votre numéro ou votre e-mail. Nous vous enverrons un code pour choisir un nouveau mot de passe.</span></div>
+      <sc-if value="{{ resetSent }}" hint-placeholder-val="{{ false }}"><div style="background:#ECFDF5;color:#065F46;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px"><span class="material-symbols-rounded">mark_email_read</span><span style="flex:1;font-size:14px;font-weight:500">Code envoyé. Il est valable 10 minutes.</span></div></sc-if>
+      <div style="display:flex;flex-direction:column;gap:8px"><label style="font-size:13px;font-weight:500">Téléphone ou e-mail</label><div style="height:48px;border:1px solid #E2E8F0;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 16px;color:#64748B;background:#fff"><span class="material-symbols-rounded">person</span><input value="{{ ident }}" onChange="{{ onIdent }}" placeholder="07 12 34 56 78" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent"></div></div>
+      <button onClick="{{ sendReset }}" style="height:48px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#4338CA">{{ resetCta }}</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.role }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="RoleChoiceScreen · ordinateur" style="display:flex;flex-direction:column;gap:24px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <button onClick="{{ toLogin }}" style="align-self:flex-start;border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0"><span class="material-symbols-rounded" style="font-size:18px">arrow_back</span>Connexion</button>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:28px;font-weight:700">Qui êtes-vous ?</span><span style="font-size:16px;color:#475569">Votre espace sera adapté à votre profil.</span></div>
+      <sc-for list="{{ roles }}" as="r" hint-placeholder-count="2">
+        <button onClick="{{ r.pick }}" style="border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;text-align:left;cursor:pointer;background:{{ r.bg }};border:{{ r.bd }}" style-hover="box-shadow:0 4px 12px rgba(15,23,42,.08)">
+          <span style="width:56px;height:56px;flex:none;border-radius:16px;display:flex;align-items:center;justify-content:center;background:{{ r.icBg }};color:{{ r.icFg }}"><span class="material-symbols-rounded" style="font-size:30px">{{ r.icon }}</span></span>
+          <span style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:18px;font-weight:700;color:#0F172A">{{ r.label }}</span><span style="font-size:14px;color:#475569;line-height:1.4">{{ r.text }}</span></span>
+          <span class="material-symbols-rounded" style="color:{{ r.radioFg }};font-variation-settings:'FILL' 1">{{ r.radio }}</span>
+        </button>
+      </sc-for>
+      <button onClick="{{ roleNext }}" style="height:48px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#4338CA">Continuer</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.code }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="CitySelectScreen · ordinateur" style="display:flex;flex-direction:column;gap:20px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <div style="display:flex;align-items:center"><button onClick="{{ toRole }}" style="border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0"><span class="material-symbols-rounded" style="font-size:18px">arrow_back</span>Profil</button><span style="margin-left:auto;font-size:13px;font-weight:600;color:#64748B">Étape 1 sur 2</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:28px;font-weight:700">Choisissez votre cité</span><span style="font-size:16px;color:#475569;line-height:1.5">Votre bailleur recevra votre demande d'inscription et la validera.</span></div>
+    <div style="height:48px;border:1px solid #E2E8F0;background:#fff;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 16px;color:#64748B;flex:none"><span class="material-symbols-rounded">search</span><input value="{{ cityQ }}" onChange="{{ onCityQ }}" placeholder="Nom de la cité ou quartier" style="flex:1;border:0;outline:0;font-size:16px;background:transparent;color:#0F172A;min-width:0"></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ cities }}" as="c" hint-placeholder-count="3">
+        <button onClick="{{ c.pick }}" style="border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;background:{{ c.bg }};border:{{ c.bd }}" style-hover="box-shadow:0 4px 12px rgba(15,23,42,.08)">
+          <span style="width:48px;height:48px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:{{ c.icBg }};color:{{ c.icFg }}"><span class="material-symbols-rounded">location_city</span></span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:700;color:#0F172A">{{ c.name }}</span><span style="font-size:13px;color:#64748B;font-weight:500">{{ c.area }} · {{ c.free }}</span><span style="font-size:13px;color:#64748B">Bailleur : {{ c.owner }}</span></span>
+          <span class="material-symbols-rounded" style="color:{{ c.radioFg }};font-variation-settings:'FILL' 1">{{ c.radio }}</span>
+        </button>
+      </sc-for>
+      <sc-if value="{{ noCity }}" hint-placeholder-val="{{ false }}"><div style="padding:24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span class="material-symbols-rounded" style="font-size:40px;color:#94A3B8">search_off</span><span style="font-size:16px;font-weight:600">Aucune cité trouvée</span><span style="font-size:14px;color:#64748B">Vérifiez l'orthographe ou demandez le nom exact à votre bailleur.</span></div></sc-if>
+      <sc-if value="{{ cityErr }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>Sélectionnez votre cité pour continuer.</span></sc-if>
+    </div>
+      <button onClick="{{ cityNext }}" style="height:48px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#4338CA">Continuer</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.info }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="SignUpScreen · ordinateur" style="display:flex;flex-direction:column;gap:16px;animation:slideIn .3s cubic-bezier(.2,0,0,1)">
+      <div style="display:flex;align-items:center"><button onClick="{{ infoBack }}" style="border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0"><span class="material-symbols-rounded" style="font-size:18px">arrow_back</span>Retour</button><span style="margin-left:auto;font-size:13px;font-weight:600;color:#64748B">{{ infoStep }}</span></div>
+      <span style="font-size:28px;font-weight:700">{{ infoTitle }}</span>
+      <sc-if value="{{ isTenantSignup }}" hint-placeholder-val="{{ true }}"><div style="background:#EEF2FF;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex:none"><span class="material-symbols-rounded" style="color:#4F46E5">location_city</span><span style="flex:1;font-size:14px;color:#3730A3;font-weight:600">{{ cityLabel }}</span><button onClick="{{ toCity }}" style="border:0;background:transparent;color:#4F46E5;font-size:14px;font-weight:600;cursor:pointer;height:40px">Changer</button></div></sc-if>
+      <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:8px;flex:none">
+          <label style="font-size:13px;font-weight:500;color:{{ f.lab }}">{{ f.label }}</label>
+          <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}"><div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ f.bd }};color:{{ f.ic }}"><span class="material-symbols-rounded">{{ f.icon }}</span><input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" inputMode="{{ f.mode }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0"></div></sc-if>
+          <sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}"><div style="height:48px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 15px;background:#fff;border:{{ f.bd }};color:{{ f.ic }}"><span class="material-symbols-rounded">{{ f.icon }}</span><select value="{{ f.value }}" onChange="{{ f.onChange }}" style="flex:1;border:0;outline:0;font-size:16px;color:#0F172A;background:transparent;min-width:0;appearance:none;cursor:pointer"><option value="">Sélectionnez votre chambre</option><sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select><span class="material-symbols-rounded">expand_more</span></div></sc-if>
+          <sc-if value="{{ f.isFile }}" hint-placeholder-val="{{ false }}"><div style="height:120px;position:relative;min-width:0;overflow:hidden"><image-slot id="signup-cni-photo" radius="12" placeholder="Photo de la CNI (recto) — glissez l'image ici"></image-slot></div></sc-if>
+          <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500"><span class="material-symbols-rounded" style="font-size:16px">error</span>{{ f.msg }}</span></sc-if>
+          <sc-if value="{{ f.hasHint }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#64748B">{{ f.hint }}</span></sc-if>
+        </div>
+      </sc-for>
+      <button onClick="{{ toggleAccept }}" style="border:0;background:transparent;display:flex;align-items:flex-start;gap:12px;text-align:left;padding:4px 0;cursor:pointer"><span class="material-symbols-rounded" style="color:{{ acc.fg }};font-variation-settings:'FILL' 1">{{ acc.icon }}</span><span style="font-size:14px;color:#475569;line-height:1.5">J'accepte les conditions d'utilisation et le règlement intérieur de la cité.</span></button>
+      <sc-if value="{{ acc.err }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B91C1C;display:flex;align-items:center;gap:4px;font-weight:500;margin-top:-12px"><span class="material-symbols-rounded" style="font-size:16px">error</span>Cochez la case pour continuer.</span></sc-if>
+      <button onClick="{{ submitInfo }}" style="height:48px;border:0;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#4338CA">{{ infoCta }}</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="SignUpSuccessScreen · ordinateur" style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;animation:fadeUp .3s ease-out">
+      <div style="width:112px;height:112px;border-radius:50%;background:{{ doneBg }};display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,0,1)"><span class="material-symbols-rounded" style="font-size:64px;color:{{ doneFg }};font-variation-settings:'FILL' 1">{{ doneIcon }}</span></div>
+      <span style="font-size:28px;font-weight:700">{{ doneTitle }}</span>
+      <span style="font-size:16px;color:#475569;line-height:1.5">{{ doneText }}</span>
+    <sc-if value="{{ isTenantSignup }}" hint-placeholder-val="{{ false }}"><div style="width:100%;background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:12px;text-align:left"><sc-for list="{{ pendSteps }}" as="p" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px"><span style="width:32px;height:32px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ p.bg }};color:{{ p.fg }}"><span class="material-symbols-rounded" style="font-size:18px">{{ p.icon }}</span></span><span style="font-size:15px;font-weight:{{ p.w }};color:#0F172A">{{ p.label }}</span></div></sc-for></div></sc-if>
+      <a href="{{ doneHref }}" style="margin-top:8px;width:100%;height:48px;border-radius:12px;background:#4F46E5;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;text-decoration:none">{{ doneCta }}</a>
+    </div>
+    </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ONB = [
+  { kicker:'Bailleurs', icon:'bed', title:'Gérez vos chambres', text:'Immeubles, étages et chambres au même endroit, avec le statut de chaque chambre en un coup d’œil.', ph:'Illustration : plan des chambres' },
+  { kicker:'Bailleurs', icon:'group', title:'Suivez vos locataires', text:'Le locataire envoie son reçu et le montant payé, vous validez. Quittances et relances, sans tableur.', ph:'Illustration : suivi des loyers' },
+  { kicker:'Locataires', icon:'campaign', title:'Signalez un problème en un clic', text:'Fuite, panne ou serrure : le locataire déclare, le bailleur suit jusqu’à la résolution.', ph:'Illustration : signalement' },
+];
+const CITIES = [
+  { id:'jardins', name:'Cité Les Jardins', area:'Quartier Centre', owner:'Daniel A.', rooms:['A-104 · Studio · 45 000 FCFA','B-302 · Simple · 35 000 FCFA','B-401 · Studio · 45 000 FCFA','C-105 · Simple · 35 000 FCFA'] },
+  { id:'palmiers', name:'Résidence Les Palmiers', area:'Quartier Nord', owner:'Mireille K.', rooms:['P-03 · Simple · 30 000 FCFA','P-11 · Studio · 50 000 FCFA'] },
+  { id:'horizon', name:'Cité Horizon', area:'Campus universitaire', owner:'Serge B.', rooms:['H-12 · Simple · 25 000 FCFA','H-20 · Simple · 25 000 FCFA','H-31 · Studio · 40 000 FCFA'] },
+  { id:'baobab', name:'Cité Le Baobab', area:'Quartier Est', owner:'Awa T.', rooms:['1-02 · Appartement · 75 000 FCFA'] },
+];
+const ERR = { bd:'2px solid #EF4444', lab:'#B91C1C', ic:'#B91C1C' }, OK = { bd:'1px solid #E2E8F0', lab:'#0F172A', ic:'#64748B' };
+
+class Component extends DCLogic {
+  state = { device:'mobile', screen:'splash', onb:0, idMode:'phone', ident:'', pw:'', showPw:false, tried:false, busy:false, offline:false, attempts:0, resetSent:false, role:'tenant', code:'', codeTried:false, codeOk:false, accept:false, accTried:false, city:'', cityQ:'', cityTried:false, f:{ name:'', phone:'', email:'', cni:'', room:'', pw:'', pw2:'' }, fTried:false, vw:1400, vh:900 };
+  componentDidMount() {
+    this.onResize = () => this.setState({ vw: window.innerWidth, vh: window.innerHeight });
+    this.onResize(); window.addEventListener('resize', this.onResize);
+    this.hi = setInterval(() => this.state.screen === 'home' && this.setState(s => ({ hs: ((s.hs || 0) + 1) % 3 })), 3500);
+    this.splash();
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.ts); clearInterval(this.hi); }
+  splash() {
+    clearTimeout(this.ts);
+    const h = (window.location.hash || '').slice(1);
+    if (['login','role','code','forgot','onb'].includes(h)) { this.setState({ screen:h, role: h === 'code' ? 'tenant' : this.state.role }); return; }
+    this.ts = setTimeout(() => this.state.screen === 'splash' && this.setState({ screen:'home', hs:0 }), 1800);
+  }
+  fields(S, check) {
+    const v = S.f, t = S.role === 'tenant', tried = S.fTried || check;
+    const set = k => e => this.setState({ f: { ...this.state.f, [k]: e.target.value } });
+    const city = CITIES.find(c => c.id === S.city) || CITIES[0];
+    const defs = [
+      ['name','Nom complet','person','text','Prénom et nom', !v.name.trim() ? 'Ce champ est obligatoire.' : ''],
+      ['phone','Téléphone','call','tel','07 12 34 56 78', v.phone.replace(/\D/g, '').length < 8 ? 'Numéro invalide : 8 chiffres minimum.' : ''],
+      ['email','Adresse e-mail','mail','email','nom@exemple.com', !/^\S+@\S+\.\S+$/.test(v.email) ? 'Adresse e-mail invalide.' : ''],
+      ...(t ? [
+        ['cni','Numéro de CNI','badge','text','Ex. 0000 1234 5678', v.cni.replace(/\s/g, '').length < 6 ? 'Indiquez le numéro de votre carte d’identité.' : ''],
+        ['cniPhoto','Photo de la CNI','','','', '', 'file', 'Recto lisible, sans reflet. Elle n’est visible que par votre bailleur.'],
+        ['room','Chambre','bed','','', !v.room ? 'Sélectionnez votre chambre.' : '', 'select'],
+      ] : []),
+      ['pw','Mot de passe','lock','password','8 caractères minimum', v.pw.length < 8 || !/\d/.test(v.pw) ? 'Au moins 8 caractères, dont un chiffre.' : '', null, 'Au moins 8 caractères, dont un chiffre.'],
+      ['pw2','Confirmer le mot de passe','lock_reset','password','Saisissez-le à nouveau', !v.pw2 ? 'Confirmez votre mot de passe.' : v.pw2 !== v.pw ? 'Les deux mots de passe ne correspondent pas.' : ''],
+    ];
+    return defs.map(([k, label, icon, type, ph, msg, kind, hint]) => {
+      const err = tried && !!msg;
+      return { label, icon, type: type || 'text', ph, value: v[k] || '', onChange: set(k), mode: k === 'phone' ? 'tel' : k === 'email' ? 'email' : 'text', bad: !!msg,
+        isInput: !kind, isSelect: kind === 'select', isFile: kind === 'file', options: kind === 'select' ? city.rooms.map(r => ({ v: r.split(' · ')[0], l: r })) : [],
+        err, msg, hasHint: !!hint && !err, hint: hint || '', bd: err ? '2px solid #EF4444' : '1px solid #E2E8F0', lab: err ? '#B91C1C' : '#0F172A', ic: err ? '#B91C1C' : '#64748B' };
+    });
+  }
+  go(screen, extra = {}) { this.setState({ screen, ...extra }); if (screen === 'splash') this.splash(); }
+  renderVals() {
+    const S = this.state, isM = S.device === 'mobile', scr = S.screen;
+    const ms = Math.min(1, Math.max(0.5, (S.vh - 64 - 48) / 868));
+    const ds = Math.min(1, Math.max(0.3, (S.vw - 48) / 1440));
+    const o = ONB[S.onb];
+    const idEmpty = S.tried && !S.ident.trim();
+    const idBad = S.tried && !idEmpty && (S.idMode === 'email' ? !/^\S+@\S+\.\S+$/.test(S.ident) : S.ident.replace(/\D/g, '').length < 8);
+    const idE = idEmpty || idBad ? ERR : OK, pwE = S.tried && !S.pw ? ERR : OK;
+    const pill = a => a ? { bg:'#fff', fg:'#0F172A', sh:'0 1px 2px rgba(15,23,42,.12)' } : { bg:'transparent', fg:'#64748B', sh:'none' };
+    const pP = pill(S.idMode === 'phone'), pE = pill(S.idMode === 'email');
+    const codeErr = S.codeTried && S.code.trim().length !== 6;
+    const cE = codeErr ? ERR : S.codeOk ? { bd:'2px solid #10B981', lab:'#047857', ic:'#047857' } : OK;
+    const hs = S.hs || 0;
+    const HF = [
+      { icon:'apartment', bg:'#EEF2FF', fg:'#4F46E5', kicker:'Bailleurs', title:'Gérez vos chambres', text:'Le plan de chaque étage montre les chambres libres, occupées, en travaux ou en retard.' },
+      { icon:'payments', bg:'#D1FAE5', fg:'#047857', kicker:'Loyers', title:'Suivez vos locataires', text:'Le locataire envoie son justificatif de paiement, vous le validez. Relances et quittances PDF.' },
+      { icon:'campaign', bg:'#FEF3C7', fg:'#B45309', kicker:'Locataires', title:'Signalez un problème en un clic', text:'Une catégorie, une photo, et le bailleur suit jusqu’à la résolution.' },
+    ];
+    const jumpsDef = [['splash','Démarrage'],['home','Accueil'],['onb','Présentation'],['login','Connexion'],['forgot','Mot de passe oublié'],['role','Profil'],['code','Choix de la cité'],['info','Inscription'],['done','Succès']];
+    return {
+      isMobile:isM, isDesktop:!isM,
+      tg: isM ? { mBg:'#fff', mFg:'#0F172A', mSh:'0 1px 2px rgba(15,23,42,.12)', dBg:'transparent', dFg:'#64748B', dSh:'none' } : { dBg:'#fff', dFg:'#0F172A', dSh:'0 1px 2px rgba(15,23,42,.12)', mBg:'transparent', mFg:'#64748B', mSh:'none' },
+      setMobile: () => this.setState({ device:'mobile' }), setDesktop: () => this.setState({ device:'desktop' }),
+      mW: 414 * ms + 'px', mH: 868 * ms + 'px', mTf: 'scale(' + ms + ')', dW: 1440 * ds + 'px', dH: 900 * ds + 'px', dTf: 'scale(' + ds + ')',
+      jumps: jumpsDef.map(([k, l]) => ({ label:l, bg: scr === k ? '#E0E7FF' : '#fff', fg: scr === k ? '#3730A3' : '#334155', bd: scr === k ? '1px solid #C7D2FE' : '1px solid #E2E8F0', go: () => this.go(k, k === 'onb' ? { onb:0 } : k === 'code' ? { role:'tenant' } : {}) })),
+      mBg: scr === 'splash' ? '#4F46E5' : '#F8FAFC', sbFg: scr === 'splash' ? '#fff' : '#0F172A',
+      hf: { ...HF[hs], key: hs },
+      hfAll: HF.map((f, i) => ({ ...f, delay: (0.15 + i * 0.12) + 's' })),
+      hDots: HF.map((_, i) => ({ w: i === hs ? '24px' : '8px', bg: i === hs ? '#4F46E5' : '#CBD5E1', pick: () => this.setState({ hs:i }) })),
+      hSlides: { a: hs === 0, b: hs === 1, c: hs === 2 },
+      toOnb: () => this.go('onb', { onb:0 }),
+      s: { home: scr === 'home', splash: scr === 'splash', onb: scr === 'onb', login: scr === 'login', forgot: scr === 'forgot', role: scr === 'role', code: scr === 'code', info: scr === 'info', done: scr === 'done', authD: !['splash','onb','home'].includes(scr) },
+      onb: { ...o, slot:'onb-' + S.onb, slotD:'onb-d-' + S.onb, cta: S.onb === 2 ? 'Commencer' : 'Suivant' },
+      dots: ONB.map((_, i) => ({ w: i === S.onb ? '24px' : '8px', bg: i === S.onb ? '#4F46E5' : '#CBD5E1' })),
+      onbNext: () => S.onb < 2 ? this.setState({ onb: S.onb + 1 }) : this.go('login'),
+      toLogin: () => this.go('login', { tried:false, resetSent:false }), toForgot: () => this.go('forgot', { resetSent:false }), toRole: () => this.go('role'),
+      idTg: { pBg:pP.bg, pFg:pP.fg, pSh:pP.sh, eBg:pE.bg, eFg:pE.fg, eSh:pE.sh, label: S.idMode === 'phone' ? 'Numéro de téléphone' : 'Adresse e-mail', icon: S.idMode === 'phone' ? 'call' : 'mail', ph: S.idMode === 'phone' ? '07 12 34 56 78' : 'nom@exemple.com' },
+      usePhone: () => this.setState({ idMode:'phone', tried:false }), useEmail: () => this.setState({ idMode:'email', tried:false }),
+      ident:S.ident, onIdent: e => this.setState({ ident:e.target.value }), pw:S.pw, onPw: e => this.setState({ pw:e.target.value }),
+      pwType: S.showPw ? 'text' : 'password', pwIcon: S.showPw ? 'visibility_off' : 'visibility', togglePw: () => this.setState({ showPw: !S.showPw }),
+      f: { idBd:idE.bd, idLabel:idE.lab, idIc:idE.ic, idErr: idEmpty || idBad, idMsg: idEmpty ? 'Ce champ est obligatoire.' : S.idMode === 'email' ? 'Adresse e-mail invalide.' : 'Numéro invalide : 8 chiffres minimum.', pwBd:pwE.bd, pwLabel:pwE.lab, pwIc:pwE.ic, pwErr: S.tried && !S.pw },
+      offline:S.offline, busy:S.busy, loginCta: S.busy ? 'Connexion…' : S.offline ? 'Réessayer' : 'Se connecter',
+      submitLogin: () => {
+        const bad = !S.ident.trim() || !S.pw || (S.idMode === 'email' ? !/^\S+@\S+\.\S+$/.test(S.ident) : S.ident.replace(/\D/g, '').length < 8);
+        if (bad) return this.setState({ tried:true });
+        this.setState({ tried:true, busy:true });
+        setTimeout(() => { if (S.attempts === 0) this.setState({ busy:false, offline:true, attempts:1 }); else window.location.href = 'Bailleur.dc.html'; }, 1000);
+      },
+      resetSent:S.resetSent, resetCta: S.resetSent ? 'Renvoyer le code' : 'Recevoir un code', sendReset: () => this.setState({ resetSent:true }),
+      roles: [['landlord','Je suis bailleur','Propriétaire ou gestionnaire : gérez vos immeubles, chambres et loyers.','real_estate_agent'],['tenant','Je suis locataire','Étudiant ou jeune actif : inscrivez-vous dans votre cité, envoyez vos justificatifs, signalez un problème.','person']].map(([k, l, t, ic]) => { const a = S.role === k; return { label:l, text:t, icon:ic, bg: a ? '#EEF2FF' : '#fff', bd: a ? '2px solid #4F46E5' : '1px solid #E2E8F0', icBg: a ? '#4F46E5' : '#F1F5F9', icFg: a ? '#fff' : '#475569', radio: a ? 'radio_button_checked' : 'radio_button_unchecked', radioFg: a ? '#4F46E5' : '#94A3B8', pick: () => this.setState({ role:k }) }; }),
+      roleNext: () => this.go(S.role === 'tenant' ? 'code' : 'info', { cityTried:false, fTried:false }),
+      cityQ:S.cityQ, onCityQ: e => this.setState({ cityQ:e.target.value }),
+      cities: CITIES.filter(c => !S.cityQ.trim() || (c.name + ' ' + c.area).toLowerCase().includes(S.cityQ.trim().toLowerCase())).map(c => { const a = S.city === c.id; return { name:c.name, area:c.area, owner:c.owner, free: c.rooms.length + ' chambre' + (c.rooms.length > 1 ? 's' : '') + ' libre' + (c.rooms.length > 1 ? 's' : ''), bg: a ? '#EEF2FF' : '#fff', bd: a ? '2px solid #4F46E5' : '1px solid #E2E8F0', icBg: a ? '#4F46E5' : '#F1F5F9', icFg: a ? '#fff' : '#475569', radio: a ? 'radio_button_checked' : 'radio_button_unchecked', radioFg: a ? '#4F46E5' : '#94A3B8', pick: () => this.setState({ city:c.id, cityTried:false, f:{ ...S.f, room:'' } }) }; }),
+      noCity: !CITIES.some(c => !S.cityQ.trim() || (c.name + ' ' + c.area).toLowerCase().includes(S.cityQ.trim().toLowerCase())),
+      cityErr: S.cityTried && !S.city,
+      cityNext: () => S.city ? this.go('info', { fTried:false, accTried:false }) : this.setState({ cityTried:true }),
+      toCity: () => this.go('code'),
+      isTenantSignup: S.role === 'tenant', cityLabel: (CITIES.find(c => c.id === S.city) || { name:'Aucune cité' }).name,
+      fields: this.fields(S), infoCta: S.role === 'tenant' ? 'Envoyer ma demande' : 'Créer mon compte',
+      doneTitle: S.role === 'tenant' ? 'Demande envoyée' : 'Compte créé', doneIcon: S.role === 'tenant' ? 'hourglass_top' : 'check_circle', doneBg: S.role === 'tenant' ? '#DBEAFE' : '#D1FAE5', doneFg: S.role === 'tenant' ? '#1D4ED8' : '#047857',
+      doneCta: S.role === 'tenant' ? 'Retour à la connexion' : 'Accéder à mon espace',
+      pendSteps: [['Demande envoyée','check_circle',true],['Validation par le bailleur','hourglass_top',false],['Accès à votre espace locataire','lock_open',false]].map(([l, ic, d], i) => ({ label:l, icon:ic, bg: d ? '#D1FAE5' : i === 1 ? '#DBEAFE' : '#F1F5F9', fg: d ? '#047857' : i === 1 ? '#1D4ED8' : '#64748B', w: i <= 1 ? 600 : 500 })),
+      code:S.code, onCode: e => this.setState({ code: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6), codeOk:false, codeTried:false }),
+      c: { bd:cE.bd, label:cE.lab, ic:cE.ic, err:codeErr, ok:S.codeOk, cta: S.codeOk ? 'Continuer' : 'Vérifier le code' },
+      codeNext: () => { if (S.codeOk) return this.go('info', { accTried:false }); if (S.code.trim().length !== 6) return this.setState({ codeTried:true }); this.setState({ codeTried:true, codeOk:true }); },
+      infoStep: S.role === 'tenant' ? 'Étape 2 sur 2' : '', infoTitle: S.role === 'tenant' ? 'Vos informations' : 'Créer mon compte bailleur',
+      infoBack: () => this.go(S.role === 'tenant' ? 'code' : 'role'),
+      acc: { icon: S.accept ? 'check_box' : 'check_box_outline_blank', fg: S.accept ? '#4F46E5' : S.accTried ? '#B91C1C' : '#64748B', err: S.accTried && !S.accept },
+      toggleAccept: () => this.setState({ accept: !S.accept }),
+      submitInfo: () => { const bad = this.fields(S, true).some(f => f.bad); if (bad || !S.accept) return this.setState({ fTried:true, accTried:true }); this.go('done'); },
+      doneText: S.role === 'tenant' ? 'Votre demande d’inscription à ' + (CITIES.find(c => c.id === S.city) || CITIES[0]).name + ' a été transmise à votre bailleur. Vous recevrez un SMS dès qu’il l’aura validée.' : 'Ajoutez votre premier immeuble pour commencer.',
+      doneHref: S.role === 'tenant' ? 'Communs.dc.html#login' : 'Bailleur.dc.html',
+    };
+  }
+}
+</script>
+</body>
+</html>
